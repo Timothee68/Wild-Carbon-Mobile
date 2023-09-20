@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Register({ navigation }: { navigation: any }) {
+export default function Register() {
 	return (
 		<SafeAreaView style={styles.container}>
 			<Text>S'inscrire</Text>

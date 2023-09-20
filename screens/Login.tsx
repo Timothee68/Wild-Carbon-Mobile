@@ -1,5 +1,4 @@
 import React from "react";
-import Register from "./Register";
 import {
 	Text,
 	View,
@@ -10,7 +9,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,9 +34,6 @@ export default function Login({ navigation }: { navigation: any }) {
 					<TouchableOpacity onPress={navigateToRegister}>
 						<Text style={styles.link}>Créer un compte</Text>
 					</TouchableOpacity>
-					<NavigationContainer independent={true}>
-						<Stack.Screen name="Register" component={Register} />
-					</NavigationContainer>
 				</View>
 			</SafeAreaView>
 		</>

@@ -8,11 +8,13 @@ Logs.enableExpoCliLogging();
 
 const { manifest2 } = Constants;
 
-const ip = "192.168.0.1";
+const http = "http://";
+
+const ip ="192.168.0.6"
 
 const api = (typeof manifest2?.extra?.expoGo?.packagerOpts === `object`) && manifest2.extra.expoGo.packagerOpts.dev
-  ? manifest2.extra.expoGo.debuggerHost?.split(`:`)?.shift()?.concat(`:4000`)
-  : `http://${ip}:4000`;
+  ? http + manifest2.extra.expoGo.debuggerHost?.split(`:`)?.shift()?.concat(`:4000/graphql`)
+  : `http://${ip}:4000/graphql`;
   
 console.log("api",api);
 
@@ -33,12 +35,8 @@ const authLink = setContext(
           };
         });
 
-console.log("auth",authLink);
-console.log("addsdbfdhfg", authLink.concat(httpLink));
-
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  // link: httpLink,
   cache: new InMemoryCache(),
 });
 

@@ -1,24 +1,22 @@
 import React from "react";
 import { Text, FlatList, Image, View, ScrollView } from "react-native";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_USERS } from "../src/gql/UserGql";
-import UserType from "../src/types/UserType";
-import { Logs } from "expo";
-
+import { GET_ALL_ARTICLES } from "../src/gql/ArticleGql";
+import ArticleType from "../src/types/ArticleType";
 // Logs.enableExpoCliLogging();
 
 export default function Home() {
 
-    const { data, loading , error} = useQuery(GET_ALL_USERS); 
-    const UserItem = ({ user }: { user: UserType }) => {
-      const { id , pseudo, email } = user;
+    const { data, loading , error} = useQuery(GET_ALL_ARTICLES); 
+    const ArticleItem = ({ article }: { article: ArticleType }) => {
+      const { id, title, description  } = article;
     
         return (
           <>
           <View>  
             <Text> {id}</Text>
-            <Text> {pseudo}</Text>
-            <Text> {email}</Text>
+            <Text> {title}</Text>
+            <Text> {description}</Text>
           </View>
           </>
         );
@@ -44,8 +42,8 @@ export default function Home() {
       </View>
 
       <FlatList
-        data={data.getAllUsers }
-        renderItem={({ item }) => <UserItem user={item} />}
+        data={data.getAllArticle }
+        renderItem={({ item }) => <ArticleItem article={item} />}
         keyExtractor={( index) => index}
       />
       </ScrollView>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	Text,
 	View,
@@ -6,26 +6,75 @@ import {
 	TextInput,
 	TouchableOpacity,
 	Button,
+	Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Register() {
+	const [pseudo, setPseudo] = useState("");
+	const [email, setEmail] = useState("");
+	const [motDePasse, setMotDePasse] = useState("");
+
+	const handleRegister = () => {
+		if (pseudo && email && motDePasse) {
+			fetch("adresse de l'api", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					pseudo,
+					email,
+					motDePasse,
+				}),
+			})
+				.then((response) => response.json())
+				.then((data) => {
+					if (data.success) {
+						Alert.alert(
+							"Inscription réussie",
+							"Votre compte a été créé avec succès."
+						);
+					} else {
+						Alert.alert(
+							"Erreur",
+							"L'inscription a échoué. Veuillez réessayer."
+						);
+					}
+				})
+				.catch((error) => {
+					console.error("Erreur lors de la requête au serveur :", error);
+				});
+		} else {
+			Alert.alert("Champs requis", "Veuillez remplir tous les champs.");
+		}
+	};
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<Text>S'inscrire</Text>
 			<View>
-				<TextInput placeholder="Pseudo" style={styles.input_container} />
+				<TextInput
+					placeholder="Pseudo"
+					style={styles.input_container}
+					value={pseudo}
+					onChangeText={(text) => setPseudo(text)}
+				/>
 				<TextInput
 					placeholder="Email"
 					style={styles.input_container}
 					keyboardType="email-address"
+					value={email}
+					onChangeText={(text) => setEmail(text)}
 				/>
 				<TextInput
 					placeholder="Mot de passe"
 					style={styles.input_container}
 					secureTextEntry={true}
+					value={motDePasse}
+					onChangeText={(text) => setMotDePasse(text)}
 				/>
-				<TouchableOpacity>
+				<TouchableOpacity onPress={handleRegister}>
 					<Button color={"#7ED957"} title="Créer mon compte'" />
 				</TouchableOpacity>
 			</View>
@@ -46,8 +95,5 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		marginBottom: 10,
 		borderRadius: 10,
-	},
-	button: {
-		backgroundColor: "#7ED957",
 	},
 });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	Text,
 	View,
@@ -6,6 +6,7 @@ import {
 	TextInput,
 	TouchableOpacity,
 	Button,
+	Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -16,19 +17,39 @@ export default function Login({ navigation }: { navigation: any }) {
 	const navigateToRegister = () => {
 		navigation.navigate("Register");
 	};
+	const navigateToHome = () => {
+		navigation.navigate("Home");
+	};
+	const [pseudo, setPseudo] = useState("");
+	const [motDePasse, setMotDePasse] = useState("");
 
+	const handleLogin = () => {
+		if (pseudo === "pseudo" && motDePasse === "motDePasse") {
+			Alert.alert("connexion réussie");
+			navigateToHome();
+		} else {
+			Alert.alert("mauvais identifiants");
+		}
+	};
 	return (
 		<>
 			<SafeAreaView style={styles.container}>
 				<Text>Se connecter</Text>
 				<View>
-					<TextInput placeholder="Pseudo" style={styles.input_container} />
+					<TextInput
+						placeholder="Pseudo"
+						style={styles.input_container}
+						value={pseudo}
+						onChangeText={(text) => setPseudo(text)}
+					/>
 					<TextInput
 						placeholder="Mot de passe"
 						style={styles.input_container}
 						secureTextEntry={true}
+						value={motDePasse}
+						onChangeText={(text) => setMotDePasse(text)}
 					/>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={handleLogin}>
 						<Button color={"#7ED957"} title="Me connecter" />
 					</TouchableOpacity>
 					<TouchableOpacity onPress={navigateToRegister}>
@@ -53,6 +74,7 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		marginBottom: 10,
 		borderRadius: 10,
+		padding: 10,
 	},
 	link: {
 		color: "#7ED957",

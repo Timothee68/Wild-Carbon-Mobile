@@ -32,15 +32,13 @@ export default function Home() {
         );
       };
 
-
-
   return (
     <>
     <ScrollView>
       <View style={styles.wrapper}>
         <View style={styles.logo}>
           <Image
-          source={require('../assets/logo.png')}
+          source={require('../assets/finaLogo.png')}
           style={{ width: 350, height: 200 }}
         />
         <Text style={styles.intro}>Le premier tracker de dépenses carbone 100% gratuit</Text>

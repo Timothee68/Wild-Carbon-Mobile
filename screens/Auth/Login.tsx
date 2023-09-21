@@ -7,6 +7,8 @@ import {
 	TouchableOpacity,
 	Button,
 	Alert,
+	TouchableWithoutFeedback,
+	Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -33,30 +35,32 @@ export default function Login({ navigation }: { navigation: any }) {
 	};
 	return (
 		<>
-			<SafeAreaView style={styles.container}>
-				<Text>Se connecter</Text>
-				<View>
-					<TextInput
-						placeholder="Pseudo"
-						style={styles.input_container}
-						value={pseudo}
-						onChangeText={(text) => setPseudo(text)}
-					/>
-					<TextInput
-						placeholder="Mot de passe"
-						style={styles.input_container}
-						secureTextEntry={true}
-						value={motDePasse}
-						onChangeText={(text) => setMotDePasse(text)}
-					/>
-					<TouchableOpacity onPress={handleLogin}>
-						<Button color={"#7ED957"} title="Me connecter" />
-					</TouchableOpacity>
-					<TouchableOpacity onPress={navigateToRegister}>
-						<Text style={styles.link}>Créer un compte</Text>
-					</TouchableOpacity>
-				</View>
-			</SafeAreaView>
+			<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+				<SafeAreaView style={styles.container}>
+					<Text>Se connecter</Text>
+					<View>
+						<TextInput
+							placeholder="Pseudo"
+							style={styles.input_container}
+							value={pseudo}
+							onChangeText={(text) => setPseudo(text)}
+						/>
+						<TextInput
+							placeholder="Mot de passe"
+							style={styles.input_container}
+							secureTextEntry={true}
+							value={motDePasse}
+							onChangeText={(text) => setMotDePasse(text)}
+						/>
+						<TouchableOpacity onPress={handleLogin}>
+							<Button color={"#7ED957"} title="Me connecter" />
+						</TouchableOpacity>
+						<TouchableOpacity onPress={navigateToRegister}>
+							<Text style={styles.link}>Créer un compte</Text>
+						</TouchableOpacity>
+					</View>
+				</SafeAreaView>
+			</TouchableWithoutFeedback>
 		</>
 	);
 }

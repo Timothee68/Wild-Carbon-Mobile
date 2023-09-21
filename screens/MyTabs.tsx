@@ -27,7 +27,7 @@ export default function MyTabs() {
 				},
 				headerTitle: () => (
 					<Image
-						source={require("./assets/leaf.png")}
+						source={require("../assets/leaf.png")}
 						style={styles.logoCentral}
 					/>
 				),

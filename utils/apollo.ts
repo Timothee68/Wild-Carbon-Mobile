@@ -10,7 +10,7 @@ const { manifest2 } = Constants;
 
 const http = "http://";
 
-const ip ="192.168.0.6"
+const ip =""
 
 const api = (typeof manifest2?.extra?.expoGo?.packagerOpts === `object`) && manifest2.extra.expoGo.packagerOpts.dev
   ? http + manifest2.extra.expoGo.debuggerHost?.split(`:`)?.shift()?.concat(`:4000/graphql`)

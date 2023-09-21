@@ -1,8 +1,9 @@
 import React from "react";
 import { Text, FlatList, Image, View, ScrollView, StyleSheet } from "react-native";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_ARTICLES } from "../src/gql/ArticleGql";
-import ArticleType from "../src/types/ArticleType";
+import { GET_ALL_ARTICLES } from "../../src/gql/ArticleGql";
+import ArticleType from "../../src/types/ArticleType";
+import { ArticleItem } from "./components/ArcticleItemForList";
 // Logs.enableExpoCliLogging();
 
 export default function Home() {
@@ -16,21 +17,6 @@ export default function Home() {
     if (loading) {
       return <Text>Fetching data...</Text>;
     }
-
-    const ArticleItem = ({ article }: { article: ArticleType }) => {
-      const { id, title, description, url,createdAt  } = article;
-    
-        return (
-          <>
-        <View key={id} style={styles.container}>
-          <Text style={styles.title}> {title}</Text>
-          <Text style={styles.text}> {description}</Text>
-          <Text style={styles.url}>{url}</Text>
-          {/* <Text>Date de création : {createdAt}</Text> */}
-          </View>
-          </>
-        );
-      };
 
   return (
     <>
@@ -64,21 +50,6 @@ const styles = StyleSheet.create({
       marginBottom:20,
       borderWidth:2,
       borderColor:"#3C8962"
-  },
-  text: {
-      textAlign: "justify" ,   
-      fontWeight: 'bold',
-      fontSize: 15,
-      marginBottom:10
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    textAlign: "center",
-    marginBottom:10
-  },
-  url: {
-    textAlign: "center",
   },
   logo: {
     justifyContent: 'flex-start',

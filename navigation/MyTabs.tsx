@@ -2,9 +2,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { TouchableOpacity, Image, StyleSheet } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-import Article from "./Article";
-import Login from "./Login";
-import Home from "./Home";
+import Article from "../screens/Article";
+import Login from "../screens/Auth/Login";
+import Home from "../screens/Home/index";
 
 const Tab = createBottomTabNavigator();
 export default function MyTabs() {

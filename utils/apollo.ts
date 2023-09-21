@@ -15,14 +15,10 @@ const ip ="192.168.0.6"
 const api = (typeof manifest2?.extra?.expoGo?.packagerOpts === `object`) && manifest2.extra.expoGo.packagerOpts.dev
   ? http + manifest2.extra.expoGo.debuggerHost?.split(`:`)?.shift()?.concat(`:4000/graphql`)
   : `http://${ip}:4000/graphql`;
-  
-console.log("api",api);
 
 const httpLink = createHttpLink({
   uri: api,
 });
-
-console.log("http",httpLink);
 
 const authLink = setContext(
   async ( _ , { headers }) => {

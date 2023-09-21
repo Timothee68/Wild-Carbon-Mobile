@@ -2,7 +2,6 @@ import React from "react";
 import { Text, FlatList, Image, View, ScrollView, StyleSheet } from "react-native";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_ARTICLES } from "../../src/gql/ArticleGql";
-import ArticleType from "../../src/types/ArticleType";
 import { ArticleItem } from "./components/ArcticleItemForList";
 // Logs.enableExpoCliLogging();
 
@@ -25,7 +24,7 @@ export default function Home() {
             <View style={styles.wrapper}>
               <View style={styles.logo}>
                 <Image
-                  source={require('../assets/logo.png')}
+                  source={require('../../assets/logo.png')}
                   style={{ width: 350, height: 200 }}
                 />
                 <Text style={styles.intro}>Le premier tracker de dépenses carbone 100% gratuit</Text>

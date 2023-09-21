@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { TouchableOpacity, Image, StyleSheet } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-import Article from "../screens/Article";
+import Article from "../screens/Article/index";
 import Login from "../screens/Auth/Login";
 import Home from "../screens/Home/index";
 

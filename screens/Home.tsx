@@ -34,23 +34,23 @@ export default function Home() {
 
   return (
     <>
-    <ScrollView>
-      <View style={styles.wrapper}>
-        <View style={styles.logo}>
-          <Image
-          source={require('../assets/logo.png')}
-          style={{ width: 350, height: 200 }}
-        />
-        <Text style={styles.intro}>Le premier tracker de dépenses carbone 100% gratuit</Text>
-        </View>
-
-        <FlatList
-          data={data.getAllArticle }
-          renderItem={({ item }) => <ArticleItem article={item} />}
-          keyExtractor={(item, index) => String(index)}
-        />
-      </View>
-      </ScrollView>
+      <FlatList
+          ListHeaderComponent={() => (
+            <View style={styles.wrapper}>
+              <View style={styles.logo}>
+                <Image
+                  source={require('../assets/logo.png')}
+                  style={{ width: 350, height: 200 }}
+                />
+                <Text style={styles.intro}>Le premier tracker de dépenses carbone 100% gratuit</Text>
+              </View>
+            </View>
+          )}
+        data={data.getAllArticle }
+        renderItem={({ item }) => <ArticleItem article={item} />}
+        keyExtractor={(item, index) => String(index)}
+        nestedScrollEnabled={true}
+      />
   </> 
   );
 }
@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   logo: {
-    flex: 1, 
     justifyContent: 'flex-start',
     alignItems: 'center' 
   },

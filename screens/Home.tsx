@@ -38,7 +38,7 @@ export default function Home() {
       <View style={styles.wrapper}>
         <View style={styles.logo}>
           <Image
-          source={require('../assets/finaLogo.png')}
+          source={require('../assets/logo.png')}
           style={{ width: 350, height: 200 }}
         />
         <Text style={styles.intro}>Le premier tracker de dépenses carbone 100% gratuit</Text>

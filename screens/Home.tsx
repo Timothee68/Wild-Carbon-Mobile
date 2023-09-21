@@ -47,7 +47,7 @@ export default function Home() {
         <FlatList
           data={data.getAllArticle }
           renderItem={({ item }) => <ArticleItem article={item} />}
-          keyExtractor={( id ) => id}
+          keyExtractor={(item, index) => String(index)}
         />
       </View>
       </ScrollView>

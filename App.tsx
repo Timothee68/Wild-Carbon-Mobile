@@ -1,3 +1,5 @@
+import client  from "./utils/apollo";
+import { ApolloProvider } from "@apollo/client/react/context/ApolloProvider";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -7,13 +9,16 @@ import MyStack from "./screens/MyStack";
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-	return (
-		<NavigationContainer>
-			<MyStack />
-		</NavigationContainer>
-	);
-}
 
+	return (
+    <ApolloProvider client={client}>
+      <NavigationContainer>
+        <MyStack />
+      </NavigationContainer>
+   </ApolloProvider>
+	);
+
+}
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,

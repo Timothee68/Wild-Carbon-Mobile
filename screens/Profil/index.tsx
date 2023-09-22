@@ -23,13 +23,14 @@ export default function Profil({ navigation }: { navigation: any }) {
 
     const onRefresh = React.useCallback(() => {
       setRefreshing(true);
+      refetch();
       setTimeout(() => {
         setRefreshing(false);
       }, 2000);
     }, []);
   
-    const userId = '096c5c3c-9b24-4a9e-9452-a0332eede778'; 
-    const { data, loading, error } = useQuery(GET_USER , {
+    const userId = 'a4075c11-6e63-4877-afea-a9ec8cb9da71'; 
+    const { data, loading, error, refetch } = useQuery(GET_USER , {
       variables: { userId }, 
     });
 
@@ -62,7 +63,7 @@ export default function Profil({ navigation }: { navigation: any }) {
           
         Alert.alert( "Mise à jour réussie",
         "Vos informations ont été mises à jour avec succès.");
-
+        refetch();
         } catch (error) {
           console.error('Erreur lors de la mise à jour de l\'utilisateur :', error);
           Alert.alert("Erreur", "Une erreur est survenue. Veuillez réessayer plus tard.");
@@ -86,7 +87,7 @@ export default function Profil({ navigation }: { navigation: any }) {
           
         setModalVisible(false);    
         setPasswordError("");
-
+        refetch();
         Alert.alert( "Mise à jour réussie",
         "Vos informations ont été mises à jour avec succès.");
 

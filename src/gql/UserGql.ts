@@ -16,6 +16,7 @@ export const UPDATE_USER = gql`
       id
       pseudo
       email
+      password
     }
   }
 `;

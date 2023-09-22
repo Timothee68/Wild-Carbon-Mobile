@@ -1,9 +1,8 @@
 import React from "react";
-import { Text, FlatList, Image, View, ScrollView, StyleSheet } from "react-native";
+import { Text, FlatList, Image, View, StyleSheet } from "react-native";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_ARTICLES } from "../../src/gql/ArticleGql";
 import { ArticleItem } from "./components/ArcticleItemForList";
-// Logs.enableExpoCliLogging();
 
 export default function Home() {
 
@@ -20,6 +19,7 @@ export default function Home() {
   return (
     <>
       <FlatList
+        style={styles.flatList}
           ListHeaderComponent={() => (
             <View style={styles.wrapper}>
               <View style={styles.logo}>
@@ -61,6 +61,9 @@ const styles = StyleSheet.create({
     marginTop:-50
   },
   wrapper: {
+    padding:10
+  },
+  flatList: {
     padding:10
   }
 

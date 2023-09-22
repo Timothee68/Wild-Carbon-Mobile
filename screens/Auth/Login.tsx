@@ -52,9 +52,11 @@ export default function Login({ navigation }: { navigation: any }) {
               value={motDePasse}
               onChangeText={(text) => setMotDePasse(text)}
             />
-            <TouchableOpacity onPress={handleLogin}>
-              <Button color={"#7ED957"} title="Me connecter" />
-            </TouchableOpacity>
+            <Button
+              color={"#7ED957"}
+              onPress={handleLogin}
+              title="Me connecter"
+            />
             <TouchableOpacity onPress={navigateToRegister}>
               <Text style={styles.link}>Créer un compte</Text>
             </TouchableOpacity>

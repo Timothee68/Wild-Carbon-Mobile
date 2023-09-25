@@ -11,8 +11,18 @@ export const CREATE_USER = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation UpdateUser($userId: String!, $pseudo: String, $email: String, $password: String) {
-    updateUser(userId: $userId, pseudo: $pseudo, email: $email, password: $password) {
+  mutation UpdateUser(
+    $userId: String!
+    $pseudo: String!
+    $email: String!
+    $password: String!
+  ) {
+    updateUser(
+      userId: $userId
+      pseudo: $pseudo
+      email: $email
+      password: $password
+    ) {
       id
       pseudo
       email
@@ -28,7 +38,7 @@ export const DELETE_USER = gql`
 `;
 
 export const GET_USER = gql`
-  query GetUser($userId: String!) {
+  query GetUser($userId: String) {
     getUser(userId: $userId) {
       id
       pseudo
@@ -48,7 +58,22 @@ export const GET_ALL_USERS = gql`
 `;
 
 export const LOGIN = gql`
-  mutation Login($email: String!, $password: String!) {
+  query Login($email: String!, $password: String!) {
     login(email: $email, password: $password)
+  }
+`;
+
+export const GET_ALL_FRIENDS = gql`
+  query GetFriends($userId: String) {
+    getFriends(userId: $userId) {
+      id
+      pseudo
+    }
+  }
+`;
+
+export const ADD_FRIEND = gql`
+  mutation AddFriend($userId: String!, $userIdToAdd: String!) {
+    addFriend(userId: $userId, userIdToAdd: $userIdToAdd)
   }
 `;

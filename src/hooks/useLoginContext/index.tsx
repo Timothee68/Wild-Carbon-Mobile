@@ -13,28 +13,35 @@ import { getUserTokenFromLocalStorage } from "./localStorage";
 interface LoginContextType {
   isLoggedIn: boolean;
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
-  userToken: string | undefined;
-  setUserToken: Dispatch<SetStateAction<string | undefined>>;
+  userToken: string;
+  setUserToken: Dispatch<SetStateAction<string>>;
+  userId: string;
+  setUserId: Dispatch<SetStateAction<string>>;
 }
 
 export const LoginContext = createContext<LoginContextType>({
   isLoggedIn: false,
   setIsLoggedIn: () => {},
-  userToken: undefined,
+  userToken: "",
   setUserToken: () => {},
+  userId: "",
+  setUserId: () => {},
 });
 
 export const LoginContextProvider: FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userToken, setUserToken] = useState<string | undefined>(undefined);
+  const [userToken, setUserToken] = useState<string>("");
+  const [userId, setUserId] = useState<string>("");
 
   useEffect(() => {
     (async () => {
       const userToken = await getUserTokenFromLocalStorage();
-      setUserToken(userToken?.userToken);
-      setIsLoggedIn(!!userToken?.userToken);
+      if (userToken?.userToken) {
+        setUserToken(userToken.userToken);
+        setIsLoggedIn(true);
+      }
     })();
   }, []);
 
@@ -44,6 +51,8 @@ export const LoginContextProvider: FC<{ children: React.ReactNode }> = ({
       setIsLoggedIn,
       userToken,
       setUserToken,
+      userId,
+      setUserId,
     }),
     [isLoggedIn, setIsLoggedIn]
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -6,33 +6,52 @@ import {
   TextInput,
   TouchableOpacity,
   Button,
-  Alert,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useLazyQuery } from "@apollo/client";
+import { LOGIN } from "../../src/gql/UserGql";
+import useLoginContext from "../../src/hooks/useLoginContext";
+import { saveUserTokenInLocalStorage } from "../../src/hooks/useLoginContext/localStorage";
 
 const Stack = createNativeStackNavigator();
 
 export default function Login({ navigation }: { navigation: any }) {
+  const [login, { data, error }] = useLazyQuery(LOGIN);
+  const { setIsLoggedIn, setUserToken } = useLoginContext();
   const navigateToRegister = () => {
     navigation.navigate("Register");
   };
   const navigateToHome = () => {
-    navigation.navigate("Home");
+    navigation.navigate("Tabs");
   };
-  const [pseudo, setPseudo] = useState("");
+  const [email, setEmail] = useState("");
   const [motDePasse, setMotDePasse] = useState("");
 
   const handleLogin = () => {
-    if (pseudo === "pseudo" && motDePasse === "motDePasse") {
-      Alert.alert("connexion réussie");
-      navigateToHome();
-    } else {
-      Alert.alert("mauvais identifiants");
-    }
+    login({
+      variables: {
+        email,
+        password: motDePasse,
+      },
+    });
   };
+
+  useEffect(() => {
+    if (data?.login) {
+      setIsLoggedIn(true);
+      setUserToken(data.login);
+      saveUserTokenInLocalStorage({ userToken: data.login });
+      navigateToHome();
+    }
+  }, [data]);
+
+  if (error) {
+    console.log("error", error);
+  }
+
   return (
     <>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -42,8 +61,8 @@ export default function Login({ navigation }: { navigation: any }) {
             <TextInput
               placeholder="Pseudo"
               style={styles.input_container}
-              value={pseudo}
-              onChangeText={(text) => setPseudo(text)}
+              value={email}
+              onChangeText={(text) => setEmail(text)}
             />
             <TextInput
               placeholder="Mot de passe"

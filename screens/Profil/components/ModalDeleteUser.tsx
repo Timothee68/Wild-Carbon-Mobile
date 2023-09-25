@@ -1,8 +1,7 @@
 import React, {  useState } from "react";
-import { Text, StyleSheet, View, Button, Alert, Modal } from "react-native";
+import { Text, View, Button, Alert, Modal } from "react-native";
 import { DELETE_USER } from "../../../src/gql/UserGql";
 import { useMutation } from "@apollo/client";
-import { useNavigation } from '@react-navigation/native';
 
 interface ModalDeleteUser {
   userId: string;

@@ -9,17 +9,15 @@ interface ModalUpdatePasswordUserProps {
   userId: string;
   refetch: () => void;
   styles: any;
-  password:string,
-  setPassword:React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function ModalUpdatePasswordUser({ userId, refetch , styles , password , setPassword}: ModalUpdatePasswordUserProps) {
+export default function ModalUpdatePasswordUser({ userId, refetch , styles}: ModalUpdatePasswordUserProps) {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [passwordError, setPasswordError] = useState("");
-  // const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
 
   const [updateUser] = useMutation(UPDATE_USER, {

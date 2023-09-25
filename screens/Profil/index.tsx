@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, View, SafeAreaView, ScrollView, RefreshControl } from "react-native";
 import {GET_USER} from "../../src/gql/UserGql";
 import { useQuery } from "@apollo/client";
-import UserType from "../../src/types/UserType";
+import {UserProfile} from "../../src/types/UserType";
 import { Logs } from 'expo';
 import ModalDeleteUser from "./components/ModalDeleteUser";
 import ModalUpdatePasswordUser from "./components/ModalUpdatePassword";
@@ -12,10 +12,7 @@ Logs.enableExpoCliLogging();
 export default function Profil() {
 
     const [refreshing, setRefreshing] = React.useState(false);
-    const [pseudo, setPseudo] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
+   
     const onRefresh = React.useCallback(() => {
       setRefreshing(true);
       refetch();
@@ -24,19 +21,15 @@ export default function Profil() {
       }, 2000);
     }, []);
   
-    const userId = 'a4075c11-6e63-4877-afea-a9ec8cb9da71'; 
-    const { data, loading, error, refetch } = useQuery(GET_USER , {
+    const userId = 'a4075c11-6e63-4877-afea-a9ec8cb9da71';
+     
+    const { data: user, loading, error, refetch } = useQuery<UserProfile>(GET_USER , {
       variables: { userId }, 
     });
 
-    useEffect( () => {
-      if(data?.getUser){
-        const user = data.getUser as UserType;
-        setPseudo(user.pseudo);
-        setEmail(user.email);
-        setPassword(user.password);
-      }
-    }, [data])      
+    if (!user) {
+      return <Text>Il y a eu un probleme...</Text>
+    }
 
     if (error) {
         return <Text>Erreur : {error.message}</Text>;
@@ -45,6 +38,7 @@ export default function Profil() {
     if (loading) { 
       return <Text>Fetching data...</Text>;
     }
+    
     return (
       <>
         <ScrollView  
@@ -57,13 +51,13 @@ export default function Profil() {
               <View style={styles.card}>
                 <Text style={styles.text}>Informations Personelles</Text>
                   <SafeAreaView>
-                      <UpdateInfosUser userId={userId}  refetch={refetch} styles={styles} pseudo={pseudo} setPseudo={setPseudo} email={email} setEmail={setEmail}></UpdateInfosUser>
+                      <UpdateInfosUser userId={userId}  refetch={refetch} styles={styles} user={user}></UpdateInfosUser>
                   </SafeAreaView>   
               </View>
               <View style={styles.card}>
                 <Text style={styles.text}>Mot de passe</Text>
                 <SafeAreaView>
-                  <ModalUpdatePasswordUser userId={userId} refetch={refetch} styles={styles}  password={password} setPassword={setPassword}></ModalUpdatePasswordUser>
+                  <ModalUpdatePasswordUser userId={userId} refetch={refetch} styles={styles}></ModalUpdatePasswordUser>
                 </SafeAreaView>   
               </View>
                 <ModalDeleteUser userId={userId} styles={styles} ></ModalDeleteUser>

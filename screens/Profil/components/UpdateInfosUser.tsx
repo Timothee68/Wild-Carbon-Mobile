@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { Text, StyleSheet, View, TextInput, Button, Alert, Modal, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { View, TextInput, Button, Alert } from "react-native";
 import {UPDATE_USER} from "../../../src/gql/UserGql";
 import { useMutation } from "@apollo/client";
-import UserType from "../../../src/types/UserType";
+import { UserProfile } from "../../../src/types/UserType";
 
 interface UpdateInfosUser {
     userId: string;
     refetch: () => void;
     styles: any,
-    pseudo: string
-    setPseudo:React.Dispatch<React.SetStateAction<string>>;
-    email:string
-    setEmail:React.Dispatch<React.SetStateAction<string>>;
+    user: UserProfile;
   }
 
-export default function UpdateInfosUser({ userId, refetch , pseudo , setPseudo , email , setEmail , styles }: UpdateInfosUser) {
+export default function UpdateInfosUser({ userId, refetch, styles, user }: UpdateInfosUser) {
 
     const [updateUser] = useMutation(UPDATE_USER, {
         variables: { userId } ,
     });
+
+    const [pseudo, setPseudo] = useState(user.getUser.pseudo);
+    const [email, setEmail] = useState(user.getUser.email);
 
    const handleUpdateUser = async () => {
     try {
@@ -41,7 +41,7 @@ export default function UpdateInfosUser({ userId, refetch , pseudo , setPseudo ,
 
    return (
     <>
-            <TextInput
+        <TextInput
             editable
             style={styles.input}
             value={pseudo}

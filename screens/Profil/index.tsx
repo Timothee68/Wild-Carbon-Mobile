@@ -37,8 +37,6 @@ export default function Profil() {
     refetch,
   } = useQuery<UserProfile>(GET_USER);
 
-  console.log("user", user);
-
   if (!user) {
     return <Text>Il y a eu un probleme...</Text>;
   }

@@ -58,7 +58,7 @@ export const GET_ALL_USERS = gql`
 `;
 
 export const LOGIN = gql`
-  query Login($email: String!, $password: String!) {
+  mutation Login($email: String!, $password: String!) {
     login(email: $email, password: $password)
   }
 `;

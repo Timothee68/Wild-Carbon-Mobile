@@ -45,7 +45,7 @@ const AddFriend: React.FC<AddFriendProps> = ({ friendsList }) => {
       <Card.Title>Ajouter un ami</Card.Title>
       <Card.Divider />
       <Input
-        placeholder="Pseudo"
+        placeholder="Email"
         rightIcon={<Icon name="search" />}
         onChangeText={(text) => setSearch(text)}
       />

@@ -49,7 +49,7 @@ export default function MyTabs({ navigation }: { navigation: any }) {
 						></Ionicons>
 					</TouchableOpacity>
 				),
-				tabBarActiveTintColor: "blue",
+				tabBarActiveTintColor: "#7ED957",
 				tabBarInactiveTintColor: "gray",
 			})}
 		>

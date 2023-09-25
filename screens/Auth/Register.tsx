@@ -7,6 +7,8 @@ import {
 	TouchableOpacity,
 	Button,
 	Alert,
+	TouchableWithoutFeedback,
+	Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -51,34 +53,36 @@ export default function Register() {
 	};
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<Text>S'inscrire</Text>
-			<View>
-				<TextInput
-					placeholder="Pseudo"
-					style={styles.input_container}
-					value={pseudo}
-					onChangeText={(text) => setPseudo(text)}
-				/>
-				<TextInput
-					placeholder="Email"
-					style={styles.input_container}
-					keyboardType="email-address"
-					value={email}
-					onChangeText={(text) => setEmail(text)}
-				/>
-				<TextInput
-					placeholder="Mot de passe"
-					style={styles.input_container}
-					secureTextEntry={true}
-					value={motDePasse}
-					onChangeText={(text) => setMotDePasse(text)}
-				/>
-				<TouchableOpacity onPress={handleRegister}>
-					<Button color={"#7ED957"} title="Créer mon compte'" />
-				</TouchableOpacity>
-			</View>
-		</SafeAreaView>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+			<SafeAreaView style={styles.container}>
+				<Text>S'inscrire</Text>
+				<View>
+					<TextInput
+						placeholder="Pseudo"
+						style={styles.input_container}
+						value={pseudo}
+						onChangeText={(text) => setPseudo(text)}
+					/>
+					<TextInput
+						placeholder="Email"
+						style={styles.input_container}
+						keyboardType="email-address"
+						value={email}
+						onChangeText={(text) => setEmail(text)}
+					/>
+					<TextInput
+						placeholder="Mot de passe"
+						style={styles.input_container}
+						secureTextEntry={true}
+						value={motDePasse}
+						onChangeText={(text) => setMotDePasse(text)}
+					/>
+					<TouchableOpacity onPress={handleRegister}>
+						<Button color={"#7ED957"} title="Créer mon compte'" />
+					</TouchableOpacity>
+				</View>
+			</SafeAreaView>
+		</TouchableWithoutFeedback>
 	);
 }
 

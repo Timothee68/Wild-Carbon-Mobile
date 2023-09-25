@@ -3,7 +3,6 @@ import { Text, FlatList, Image, View, StyleSheet } from "react-native";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_ARTICLES } from "../../src/gql/ArticleGql";
 import { ArticleItem } from "./components/ArcticleItemForList";
-import useLoginContext from "../../src/hooks/useLoginContext";
 
 export default function Home() {
   const { data, loading, error } = useQuery(GET_ALL_ARTICLES);

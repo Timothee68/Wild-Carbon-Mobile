@@ -7,7 +7,12 @@ import Login from "../screens/Auth/Login";
 import Home from "../screens/Home/index";
 
 const Tab = createBottomTabNavigator();
-export default function MyTabs() {
+export default function MyTabs({ navigation }: { navigation: any }) {
+
+	const navigateToProfil = () => {
+		navigation.navigate("Profil");
+	};
+
 	return (
 		<Tab.Navigator
 			screenOptions={({ route }) => ({
@@ -34,9 +39,7 @@ export default function MyTabs() {
 				headerTitleAlign: "center",
 				headerRight: () => (
 					<TouchableOpacity
-						onPress={() => {
-							// Naviguez vers l'écran de profil ici
-						}}
+						onPress={navigateToProfil}
 						style={styles.logoProfil}
 					>
 						<Ionicons

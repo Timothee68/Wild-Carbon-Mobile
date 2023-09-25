@@ -18,18 +18,17 @@ export default function Home() {
   return (
     <>
       <FlatList
-        ListHeaderComponent={() => (
-          <View style={styles.wrapper}>
-            <View style={styles.logo}>
-              <Image
-                source={require("../../assets/logo.png")}
-                style={{ width: 350, height: 200 }}
-              />
-              <Text style={styles.intro}>
-                Le premier tracker de dépenses carbone 100% gratuit
-              </Text>
+        style={styles.flatList}
+          ListHeaderComponent={() => (
+            <View style={styles.wrapper}>
+              <View style={styles.logo}>
+                <Image
+                  source={require('../../assets/logo.png')}
+                  style={{ width: 350, height: 200 }}
+                />
+                <Text style={styles.intro}>Le premier tracker de dépenses carbone 100% gratuit</Text>
+              </View>
             </View>
-          </View>
         )}
         data={data.getAllArticle}
         renderItem={({ item }) => <ArticleItem article={item} />}
@@ -61,6 +60,9 @@ const styles = StyleSheet.create({
     marginTop: -50,
   },
   wrapper: {
-    padding: 10,
+    padding:10
   },
+  flatList: {
+    padding:10
+  }
 });

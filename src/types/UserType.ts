@@ -1,7 +1,8 @@
 import Article from "./ArticleType";
 import Expense from "./ExpenseType";
 
-type User = {
+export type User = {
+  
     id: string;
     pseudo: string;
     email: string;
@@ -9,6 +10,12 @@ type User = {
     articles: Article[]; 
     users: User[];
     expenses: Expense[]; 
-  };
+};
 
-  export default User;
+export type UserProfile = {
+  getUser: {
+    id: string;
+    pseudo: string;
+    email: string;
+  }
+};

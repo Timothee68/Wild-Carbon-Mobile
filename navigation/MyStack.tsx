@@ -17,7 +17,7 @@ export default function MyStack() {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const { isLoggedIn } = useLoginContext();
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName={isLoggedIn ? "Tabs" : "Login"}>
       {!isLoggedIn ? <Stack.Screen name="Login" component={Login} /> : null}
       {!isLoggedIn ? (
         <Stack.Screen name="Register" component={Register} />

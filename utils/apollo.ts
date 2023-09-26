@@ -27,11 +27,13 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext(async (_, { headers }) => {
-  const token = await getUserTokenFromLocalStorage();
+  const userDataFromLocalStorage = await getUserTokenFromLocalStorage();
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token.userToken}` : "",
+      authorization: userDataFromLocalStorage
+        ? `Bearer ${userDataFromLocalStorage.userToken}`
+        : "",
     },
   };
 });

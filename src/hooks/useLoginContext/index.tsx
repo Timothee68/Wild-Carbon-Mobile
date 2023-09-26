@@ -12,6 +12,7 @@ import {
   getUserTokenFromLocalStorage,
   removeUserTokenFromLocalStorage,
 } from "./localStorage";
+import { useQuery } from "@apollo/client";
 
 interface LoginContextType {
   isLoggedIn: boolean;
@@ -43,9 +44,13 @@ export const LoginContextProvider: FC<{ children: React.ReactNode }> = ({
       //This forces to login every reload, comment if needed
       // await removeUserTokenFromLocalStorage();
 
-      const userToken = await getUserTokenFromLocalStorage();
-      if (userToken?.userToken) {
-        setUserToken(userToken.userToken);
+      const userDataFromLocalStorage = await getUserTokenFromLocalStorage();
+      if (
+        userDataFromLocalStorage?.userToken &&
+        userDataFromLocalStorage?.userId
+      ) {
+        setUserToken(userDataFromLocalStorage.userToken);
+        setUserId(userDataFromLocalStorage.userId);
         setIsLoggedIn(true);
       }
     })();

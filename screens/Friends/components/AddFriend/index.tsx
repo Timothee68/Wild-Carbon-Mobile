@@ -4,14 +4,18 @@ import { Input } from "@rneui/themed";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_USERS } from "../../../../src/gql/UserGql";
 import { User, UserProfiles } from "../../../../src/types/UserType";
-import { Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import AddFriendItem from "../AddFriendItem";
 
 interface AddFriendProps {
   friendsList: User[];
+  refetchFriendsList: () => {};
 }
 
-const AddFriend: React.FC<AddFriendProps> = ({ friendsList }) => {
+const AddFriend: React.FC<AddFriendProps> = ({
+  friendsList,
+  refetchFriendsList,
+}) => {
   const { data, loading, error } = useQuery<UserProfiles>(GET_ALL_USERS);
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<User[]>([]);
@@ -29,7 +33,7 @@ const AddFriend: React.FC<AddFriendProps> = ({ friendsList }) => {
         )
       );
     }
-  }, [search, data]);
+  }, [search, data, friendsList]);
 
   if (loading) {
     return <Text>Fetching users...</Text>;
@@ -49,16 +53,26 @@ const AddFriend: React.FC<AddFriendProps> = ({ friendsList }) => {
         rightIcon={<Icon name="search" />}
         onChangeText={(text) => setSearch(text)}
       />
-      {results.map((user) => (
-        <AddFriendItem
-          key={user.id}
-          id={user.id}
-          pseudo={user.pseudo}
-          setSearch={setSearch}
-        />
-      ))}
+      <View style={styles.list}>
+        {results.map((user) => (
+          <AddFriendItem
+            key={user.id}
+            id={user.id}
+            pseudo={user.pseudo}
+            setSearch={setSearch}
+            refetchFriendsList={refetchFriendsList}
+          />
+        ))}
+      </View>
     </Card>
   );
 };
+
+const styles = StyleSheet.create({
+  list: {
+    flex: 1,
+    gap: 10,
+  },
+});
 
 export default AddFriend;

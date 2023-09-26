@@ -13,7 +13,9 @@ const Friends: React.FC = () => {
     error,
     loading,
     refetch: refetchFriendsList,
-  } = useQuery<{ getFriends: User[] }>(GET_ALL_FRIENDS);
+  } = useQuery<{ getFriends: User[] }>(GET_ALL_FRIENDS, {
+    fetchPolicy: "network-only",
+  });
 
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
@@ -44,7 +46,10 @@ const Friends: React.FC = () => {
         }
       >
         <FriendList friendsList={friendsList.getFriends} />
-        <AddFriend friendsList={friendsList.getFriends} />
+        <AddFriend
+          friendsList={friendsList.getFriends}
+          refetchFriendsList={refetchFriendsList}
+        />
       </ScrollView>
     </SafeAreaView>
   );

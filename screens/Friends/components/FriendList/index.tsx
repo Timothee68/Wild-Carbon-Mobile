@@ -1,7 +1,4 @@
-import { useQuery } from "@apollo/client";
 import React from "react";
-import { GET_ALL_FRIENDS } from "../../../../src/gql/UserGql";
-import { Text } from "react-native";
 import { Card } from "@rneui/base";
 import FriendListItem from "../FriendListItem";
 import { User } from "../../../../src/types/UserType";

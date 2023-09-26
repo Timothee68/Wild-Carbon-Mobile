@@ -9,19 +9,22 @@ interface AddFriendItemProps {
   id: string;
   pseudo: string;
   setSearch: Dispatch<SetStateAction<string>>;
+  refetchFriendsList: () => {};
 }
 
 const AddFriendItem: React.FC<AddFriendItemProps> = ({
   id,
   pseudo,
   setSearch,
+  refetchFriendsList,
 }) => {
   const [addFriend, { loading, error }] = useMutation(ADD_FRIEND);
   const { userId } = useLoginContext();
 
-  const handleAddFriend = () => {
-    addFriend({ variables: { userId: userId, userIdToAdd: id } });
+  const handleAddFriend = async () => {
+    await addFriend({ variables: { userId: userId, userIdToAdd: id } });
     setSearch("");
+    refetchFriendsList();
   };
 
   if (loading) {

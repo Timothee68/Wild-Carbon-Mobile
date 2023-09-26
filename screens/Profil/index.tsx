@@ -91,10 +91,11 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 0.5,
 		justifyContent: "center",
+		backgroundColor: "#D7CBB5",
 	},
 	card: {
-		marginTop: 50,
-		backgroundColor: "#D7CBB5",
+		margin: 30,
+		backgroundColor: "#fff",
 		padding: 20,
 	},
 	text: {
@@ -125,6 +126,7 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 35,
 		color: "#3C8962",
+		textAlign: "center",
 	},
 	button: {
 		marginLeft: 50,

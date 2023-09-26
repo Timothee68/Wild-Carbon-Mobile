@@ -16,7 +16,7 @@ export default function Home() {
 	}
 
 	return (
-		<>
+		<View style={styles.backgound}>
 			<FlatList
 				style={styles.flatList}
 				ListHeaderComponent={() => (
@@ -37,7 +37,7 @@ export default function Home() {
 				keyExtractor={(item, index) => String(index)}
 				nestedScrollEnabled={true}
 			/>
-		</>
+		</View>
 	);
 }
 
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		marginBottom: 20,
 		borderWidth: 2,
-		borderColor: "#7ED957",
+		borderColor: "#3C8962",
 	},
 	logo: {
 		justifyContent: "flex-start",
@@ -66,6 +66,8 @@ const styles = StyleSheet.create({
 	},
 	flatList: {
 		padding: 10,
+	},
+	backgound: {
 		backgroundColor: "#D7CBB5",
 	},
 });

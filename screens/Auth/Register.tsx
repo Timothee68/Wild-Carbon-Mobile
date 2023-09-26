@@ -4,51 +4,61 @@ import {
 	View,
 	StyleSheet,
 	TextInput,
-	TouchableOpacity,
 	Button,
-	Alert,
 	TouchableWithoutFeedback,
 	Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import useLoginContext from "../../src/hooks/useLoginContext";
+import { useMutation } from "@apollo/client";
+import { CREATE_USER, LOGIN } from "../../src/gql/UserGql";
+import { User } from "../../src/types/UserType";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../navigation/MyStack";
+import { saveUserTokenInLocalStorage } from "../../src/hooks/useLoginContext/localStorage";
+
+type TabsScreenNavigationProp = NativeStackNavigationProp<
+	RootStackParamList,
+	"Tabs"
+>;
 
 export default function Register() {
+	const navigation = useNavigation<TabsScreenNavigationProp>();
 	const [pseudo, setPseudo] = useState("");
 	const [email, setEmail] = useState("");
 	const [motDePasse, setMotDePasse] = useState("");
+	const { setIsLoggedIn, setUserToken, setUserId } = useLoginContext();
+	const [createUser, { loading: registerLoading, error }] = useMutation<{
+		createUser: User;
+	}>(CREATE_USER);
 
-	const handleRegister = () => {
-		if (pseudo && email && motDePasse) {
-			fetch("adresse de l'api", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
+	const [login, { loading: loginLoading }] = useMutation<{ login: string }>(
+		LOGIN,
+		{
+			onCompleted: (data) => {
+				if (data && data?.login !== "INVALID") {
+					setIsLoggedIn(true);
+					setUserToken(data.login);
+					saveUserTokenInLocalStorage({ userToken: data.login });
+					navigation.navigate("Tabs");
+				}
+			},
+		}
+	);
+
+	const handleRegister = async () => {
+		const { data: createdUserData } = await createUser({
+			variables: { pseudo, email, password: motDePasse },
+		});
+		if (createdUserData?.createUser) {
+			setUserId(createdUserData.createUser.id);
+			await login({
+				variables: {
+					email: createdUserData.createUser.email,
+					password: motDePasse,
 				},
-				body: JSON.stringify({
-					pseudo,
-					email,
-					motDePasse,
-				}),
-			})
-				.then((response) => response.json())
-				.then((data) => {
-					if (data.success) {
-						Alert.alert(
-							"Inscription réussie",
-							"Votre compte a été créé avec succès."
-						);
-					} else {
-						Alert.alert(
-							"Erreur",
-							"L'inscription a échoué. Veuillez réessayer."
-						);
-					}
-				})
-				.catch((error) => {
-					console.error("Erreur lors de la requête au serveur :", error);
-				});
-		} else {
-			Alert.alert("Champs requis", "Veuillez remplir tous les champs.");
+			});
 		}
 	};
 
@@ -77,9 +87,11 @@ export default function Register() {
 						value={motDePasse}
 						onChangeText={(text) => setMotDePasse(text)}
 					/>
-					<TouchableOpacity onPress={handleRegister}>
-						<Button color={"#7ED957"} title="Créer mon compte'" />
-					</TouchableOpacity>
+					<Button
+						color="#7ED957"
+						onPress={handleRegister}
+						title="Créer mon compte"
+					/>
 				</View>
 			</SafeAreaView>
 		</TouchableWithoutFeedback>

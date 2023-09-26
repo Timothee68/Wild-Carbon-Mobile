@@ -6,6 +6,7 @@ import { ArticleItem } from "./components/ArcticleItemForList";
 
 export default function Home() {
   const { data, loading, error } = useQuery(GET_ALL_ARTICLES);
+
   if (error) {
     return <Text>Erreur : {error.message}</Text>;
   }

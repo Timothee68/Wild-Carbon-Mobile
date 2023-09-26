@@ -20,13 +20,12 @@ const Stack = createNativeStackNavigator();
 
 export default function Login({ navigation }: { navigation: any }) {
   const [login, { loading }] = useMutation(LOGIN, {
-    onCompleted: (data) => {
+    onCompleted: async (data) => {
       if (data?.login && data.login.success) {
-        setIsLoggedIn(true);
-        setErrorMessage(null);
+        console.log("data", data);
         setUserId(data.login.user.id);
         setUserToken(data.login.token);
-        saveUserTokenInLocalStorage({ userToken: data.login.token });
+        await saveUserTokenInLocalStorage({ userToken: data.login.token });
         navigateToHome();
       } else {
         setErrorMessage("Identifiants invalides");
@@ -42,6 +41,8 @@ export default function Login({ navigation }: { navigation: any }) {
     navigation.navigate("Register");
   };
   const navigateToHome = () => {
+    setErrorMessage(null);
+    setIsLoggedIn(true);
     navigation.navigate("Tabs");
   };
   const [email, setEmail] = useState("");

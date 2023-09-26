@@ -4,9 +4,7 @@ import {
 	View,
 	StyleSheet,
 	TextInput,
-	TouchableOpacity,
 	Button,
-	Alert,
 	TouchableWithoutFeedback,
 	Keyboard,
 } from "react-native";

@@ -35,7 +35,7 @@ export default function Profil() {
     loading,
     error,
     refetch,
-  } = useQuery<UserProfile>(GET_USER);
+  } = useQuery<UserProfile>(GET_USER, { variables: { userId: userId } });
 
   if (!user) {
     return <Text>Il y a eu un probleme...</Text>;

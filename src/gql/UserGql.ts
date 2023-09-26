@@ -38,7 +38,7 @@ export const DELETE_USER = gql`
 `;
 
 export const GET_USER = gql`
-  query GetUser($userId: String) {
+  query GetUser($userId: String!) {
     getUser(userId: $userId) {
       id
       pseudo

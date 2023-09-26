@@ -45,11 +45,11 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: "center",
-		backgroundColor: "#D7CBB5",
+		backgroundColor: "#FFFFFF",
 		padding: 10,
 		marginBottom: 20,
 		borderWidth: 2,
-		borderColor: "#3C8962",
+		borderColor: "#7ED957",
 	},
 	logo: {
 		justifyContent: "flex-start",
@@ -66,5 +66,6 @@ const styles = StyleSheet.create({
 	},
 	flatList: {
 		padding: 10,
+		backgroundColor: "#D7CBB5",
 	},
 });

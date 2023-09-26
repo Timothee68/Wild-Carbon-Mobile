@@ -60,9 +60,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		backgroundColor: "#D7CBB5",
-		padding: 10,
-		marginBottom: 20,
-		borderWidth: 2,
 	},
 });
 

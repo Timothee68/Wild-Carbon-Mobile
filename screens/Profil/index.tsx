@@ -29,7 +29,7 @@ export default function Profil() {
       setRefreshing(false);
     }, 2000);
   }, []);
-  console.log("userid", userId);
+
   const {
     data: user,
     loading,

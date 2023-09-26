@@ -41,7 +41,7 @@ export const LoginContextProvider: FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     (async () => {
       //This forces to login every reload, comment if needed
-      await removeUserTokenFromLocalStorage();
+      // await removeUserTokenFromLocalStorage();
 
       const userToken = await getUserTokenFromLocalStorage();
       if (userToken?.userToken) {

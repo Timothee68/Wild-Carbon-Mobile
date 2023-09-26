@@ -22,7 +22,6 @@ export default function Login({ navigation }: { navigation: any }) {
   const [login, { loading }] = useMutation(LOGIN, {
     onCompleted: async (data) => {
       if (data?.login && data.login.success) {
-        console.log("data", data);
         setUserId(data.login.user.id);
         setUserToken(data.login.token);
         await saveUserTokenInLocalStorage({ userToken: data.login.token });

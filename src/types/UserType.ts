@@ -2,14 +2,13 @@ import Article from "./ArticleType";
 import Expense from "./ExpenseType";
 
 export type User = {
-  
-    id: string;
-    pseudo: string;
-    email: string;
-    password: string;
-    articles: Article[]; 
-    users: User[];
-    expenses: Expense[]; 
+  id: string;
+  pseudo: string;
+  email: string;
+  password: string;
+  articles: Article[];
+  users: User[];
+  expenses: Expense[];
 };
 
 export type UserProfile = {
@@ -17,5 +16,9 @@ export type UserProfile = {
     id: string;
     pseudo: string;
     email: string;
-  }
+  };
+};
+
+export type UserProfiles = {
+  getAllUsers: User[];
 };

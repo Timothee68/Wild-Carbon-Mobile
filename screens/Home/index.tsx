@@ -6,7 +6,6 @@ import { ArticleItem } from "./components/ArcticleItemForList";
 
 export default function Home() {
   const { data, loading, error } = useQuery(GET_ALL_ARTICLES);
-
   if (error) {
     return <Text>Erreur : {error.message}</Text>;
   }
@@ -19,16 +18,18 @@ export default function Home() {
     <>
       <FlatList
         style={styles.flatList}
-          ListHeaderComponent={() => (
-            <View style={styles.wrapper}>
-              <View style={styles.logo}>
-                <Image
-                  source={require('../../assets/logo.png')}
-                  style={{ width: 350, height: 200 }}
-                />
-                <Text style={styles.intro}>Le premier tracker de dépenses carbone 100% gratuit</Text>
-              </View>
+        ListHeaderComponent={() => (
+          <View style={styles.wrapper}>
+            <View style={styles.logo}>
+              <Image
+                source={require("../../assets/logo.png")}
+                style={{ width: 350, height: 200 }}
+              />
+              <Text style={styles.intro}>
+                Le premier tracker de dépenses carbone 100% gratuit
+              </Text>
             </View>
+          </View>
         )}
         data={data.getAllArticle}
         renderItem={({ item }) => <ArticleItem article={item} />}
@@ -60,9 +61,9 @@ const styles = StyleSheet.create({
     marginTop: -50,
   },
   wrapper: {
-    padding:10
+    padding: 10,
   },
   flatList: {
-    padding:10
-  }
+    padding: 10,
+  },
 });

@@ -13,9 +13,9 @@ export const CREATE_USER = gql`
 export const UPDATE_USER = gql`
   mutation UpdateUser(
     $userId: String!
-    $pseudo: String!
-    $email: String!
-    $password: String!
+    $pseudo: String
+    $email: String
+    $password: String
   ) {
     updateUser(
       userId: $userId

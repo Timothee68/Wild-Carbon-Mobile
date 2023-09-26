@@ -4,10 +4,12 @@ import { z } from "zod";
 
 interface LocalStorageUserToken {
   userToken?: string;
+  userId?: string;
 }
 
 const LocalStorageUserTokenSchema = z.object({
   userToken: z.string(),
+  userId: z.string(),
 });
 
 export const USER_TOKEN_LOCAL_STORAGE_KEY = "userTokenData";
@@ -25,11 +27,11 @@ export const getUserTokenFromLocalStorage =
   };
 
 export const saveUserTokenInLocalStorage = async (
-  userTokenObj: LocalStorageUserToken
+  userObj: LocalStorageUserToken
 ) => {
   await AsyncStorage.setItem(
     USER_TOKEN_LOCAL_STORAGE_KEY,
-    JSON.stringify(userTokenObj)
+    JSON.stringify(userObj)
   );
 };
 

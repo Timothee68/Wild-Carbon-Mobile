@@ -24,7 +24,10 @@ export default function Login({ navigation }: { navigation: any }) {
       if (data?.login && data.login.success) {
         setUserId(data.login.user.id);
         setUserToken(data.login.token);
-        await saveUserTokenInLocalStorage({ userToken: data.login.token });
+        await saveUserTokenInLocalStorage({
+          userToken: data.login.token,
+          userId: data.login.user.id,
+        });
         navigateToHome();
       } else {
         setErrorMessage("Identifiants invalides");

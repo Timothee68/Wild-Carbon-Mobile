@@ -43,7 +43,10 @@ export default function Register() {
         if (data?.login && data.login.success) {
           setIsLoggedIn(true);
           setUserToken(data.login.token);
-          saveUserTokenInLocalStorage({ userToken: data.login.token });
+          saveUserTokenInLocalStorage({
+            userToken: data.login.token,
+            userId: data.login.user.id,
+          });
           navigation.navigate("Tabs");
         }
       },

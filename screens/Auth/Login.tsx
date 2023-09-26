@@ -4,8 +4,6 @@ import {
   View,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
-  Button,
   TouchableWithoutFeedback,
   Keyboard,
   Image,
@@ -16,24 +14,30 @@ import { useMutation } from "@apollo/client";
 import { LOGIN } from "../../src/gql/UserGql";
 import useLoginContext from "../../src/hooks/useLoginContext";
 import { saveUserTokenInLocalStorage } from "../../src/hooks/useLoginContext/localStorage";
+import { Button } from "@rneui/base";
 
 const Stack = createNativeStackNavigator();
 
 export default function Login({ navigation }: { navigation: any }) {
   const [login, { loading }] = useMutation(LOGIN, {
     onCompleted: (data) => {
-      if (data && data?.login !== "INVALID") {
+      if (data?.login && data.login.success) {
         setIsLoggedIn(true);
         setErrorMessage(null);
-        setUserToken(data.login);
-        saveUserTokenInLocalStorage({ userToken: data.login });
+        setUserId(data.login.user.id);
+        setUserToken(data.login.token);
+        saveUserTokenInLocalStorage({ userToken: data.login.token });
         navigateToHome();
       } else {
         setErrorMessage("Identifiants invalides");
       }
     },
+    onError: (error) => {
+      console.error("Mutation error:", error);
+    },
   });
-  const { setIsLoggedIn, setUserToken } = useLoginContext();
+
+  const { setIsLoggedIn, setUserToken, setUserId } = useLoginContext();
   const navigateToRegister = () => {
     navigation.navigate("Register");
   };
@@ -45,9 +49,10 @@ export default function Login({ navigation }: { navigation: any }) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleLogin = async () => {
+    setErrorMessage("");
     await login({
       variables: {
-        email,
+        email: email,
         password: motDePasse,
       },
     });
@@ -65,7 +70,7 @@ export default function Login({ navigation }: { navigation: any }) {
           <Text>Se connecter</Text>
           <View>
             <TextInput
-              placeholder="Pseudo"
+              placeholder="Email"
               style={styles.input_container}
               value={email}
               onChangeText={(text) => setEmail(text)}
@@ -77,21 +82,25 @@ export default function Login({ navigation }: { navigation: any }) {
               value={motDePasse}
               onChangeText={(text) => setMotDePasse(text)}
             />
+            {errorMessage ? (
+              <Text style={styles.errorMessage}>{errorMessage}</Text>
+            ) : null}
             {loading ? (
               <Text style={styles.loadingMessage}>Loading...</Text>
             ) : (
               <Button
-                color={"#7ED957"}
-                onPress={handleLogin}
+                color="#7ED957"
+                onPress={() => handleLogin()}
                 title="Me connecter"
+                containerStyle={styles.button}
               />
             )}
-            {errorMessage ? (
-              <Text style={styles.errorMessage}>{errorMessage}</Text>
-            ) : null}
-            <TouchableOpacity onPress={navigateToRegister}>
-              <Text style={styles.link}>Créer un compte</Text>
-            </TouchableOpacity>
+
+            <Button
+              containerStyle={styles.button}
+              onPress={() => navigateToRegister()}
+              title="Créer un compte"
+            />
           </View>
         </SafeAreaView>
       </TouchableWithoutFeedback>
@@ -125,5 +134,8 @@ const styles = StyleSheet.create({
   },
   loadingMessage: {
     textAlign: "center",
+  },
+  button: {
+    marginTop: 30,
   },
 });

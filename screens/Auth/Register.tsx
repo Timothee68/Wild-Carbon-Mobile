@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import {
-	Text,
-	View,
-	StyleSheet,
-	TextInput,
-	Button,
-	TouchableWithoutFeedback,
-	Keyboard,
+  Image,
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useLoginContext from "../../src/hooks/useLoginContext";
@@ -17,99 +17,140 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../navigation/MyStack";
 import { saveUserTokenInLocalStorage } from "../../src/hooks/useLoginContext/localStorage";
+import { Button } from "@rneui/base";
 
 type TabsScreenNavigationProp = NativeStackNavigationProp<
-	RootStackParamList,
-	"Tabs"
+  RootStackParamList,
+  "Tabs"
 >;
 
 export default function Register() {
-	const navigation = useNavigation<TabsScreenNavigationProp>();
-	const [pseudo, setPseudo] = useState("");
-	const [email, setEmail] = useState("");
-	const [motDePasse, setMotDePasse] = useState("");
-	const { setIsLoggedIn, setUserToken, setUserId } = useLoginContext();
-	const [createUser, { loading: registerLoading, error }] = useMutation<{
-		createUser: User;
-	}>(CREATE_USER);
+  const navigation = useNavigation<TabsScreenNavigationProp>();
+  const [pseudo, setPseudo] = useState("");
+  const [email, setEmail] = useState("");
+  const [motDePasse, setMotDePasse] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const { setIsLoggedIn, setUserToken, setUserId } = useLoginContext();
+  const [createUser, { loading: registerLoading, error: registerError }] =
+    useMutation<{
+      createUser: User;
+    }>(CREATE_USER);
 
-	const [login, { loading: loginLoading }] = useMutation<{ login: string }>(
-		LOGIN,
-		{
-			onCompleted: (data) => {
-				if (data && data?.login !== "INVALID") {
-					setIsLoggedIn(true);
-					setUserToken(data.login);
-					saveUserTokenInLocalStorage({ userToken: data.login });
-					navigation.navigate("Tabs");
-				}
-			},
-		}
-	);
+  const [login, { loading: loginLoading, error: loginError }] = useMutation(
+    LOGIN,
+    {
+      onCompleted: (data) => {
+        if (data?.login && data.login.success) {
+          setIsLoggedIn(true);
+          setUserToken(data.login.token);
+          saveUserTokenInLocalStorage({ userToken: data.login.token });
+          navigation.navigate("Tabs");
+        }
+      },
+      onError: (error) => {
+        console.error("Mutation error: ", error);
+      },
+    }
+  );
 
-	const handleRegister = async () => {
-		const { data: createdUserData } = await createUser({
-			variables: { pseudo, email, password: motDePasse },
-		});
-		if (createdUserData?.createUser) {
-			setUserId(createdUserData.createUser.id);
-			await login({
-				variables: {
-					email: createdUserData.createUser.email,
-					password: motDePasse,
-				},
-			});
-		}
-	};
+  const handleRegister = async () => {
+    if (!pseudo || !motDePasse || !email) {
+      setErrorMessage("Champs requis manquants");
+      return;
+    }
+    const { data: createdUserData } = await createUser({
+      variables: { pseudo, email, password: motDePasse },
+    });
+    if (createdUserData?.createUser) {
+      setUserId(createdUserData.createUser.id);
+      await login({
+        variables: {
+          email: createdUserData.createUser.email,
+          password: motDePasse,
+        },
+      });
+    }
+  };
 
-	return (
-		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-			<SafeAreaView style={styles.container}>
-				<Text>S'inscrire</Text>
-				<View>
-					<TextInput
-						placeholder="Pseudo"
-						style={styles.input_container}
-						value={pseudo}
-						onChangeText={(text) => setPseudo(text)}
-					/>
-					<TextInput
-						placeholder="Email"
-						style={styles.input_container}
-						keyboardType="email-address"
-						value={email}
-						onChangeText={(text) => setEmail(text)}
-					/>
-					<TextInput
-						placeholder="Mot de passe"
-						style={styles.input_container}
-						secureTextEntry={true}
-						value={motDePasse}
-						onChangeText={(text) => setMotDePasse(text)}
-					/>
-					<Button
-						color="#7ED957"
-						onPress={handleRegister}
-						title="Créer mon compte"
-					/>
-				</View>
-			</SafeAreaView>
-		</TouchableWithoutFeedback>
-	);
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={styles.container}>
+        <Image
+          source={require("../../assets/finalLogo.png")}
+          resizeMode="contain"
+          style={{ width: 300 }}
+        />
+        <Text>S'inscrire</Text>
+        <View>
+          <TextInput
+            placeholder="Pseudo"
+            style={styles.input_container}
+            value={pseudo}
+            onChangeText={(text) => setPseudo(text)}
+          />
+          <TextInput
+            placeholder="Email"
+            style={styles.input_container}
+            keyboardType="email-address"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
+          <TextInput
+            placeholder="Mot de passe"
+            style={styles.input_container}
+            secureTextEntry={true}
+            value={motDePasse}
+            onChangeText={(text) => setMotDePasse(text)}
+          />
+
+          {errorMessage ? (
+            <Text style={{ ...styles.messages, color: "red" }}>
+              {errorMessage}
+            </Text>
+          ) : null}
+
+          {loginError ? (
+            <Text style={styles.messages}>{loginError.message}</Text>
+          ) : null}
+
+          {registerError ? (
+            <Text style={styles.messages}>{registerError.message}</Text>
+          ) : null}
+
+          {loginLoading || registerLoading ? (
+            <Text style={styles.messages}>Création en cours...</Text>
+          ) : (
+            <Button
+              color="#7ED957"
+              onPress={handleRegister}
+              title="Créer mon compte"
+              containerStyle={styles.button}
+            />
+          )}
+        </View>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
+  );
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#D7CBB5",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	input_container: {
-		borderWidth: 1,
-		borderColor: "#7ED957",
-		marginTop: 10,
-		marginBottom: 10,
-		borderRadius: 10,
-	},
+  container: {
+    flex: 1,
+    backgroundColor: "#D7CBB5",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  input_container: {
+    borderWidth: 1,
+    borderColor: "#7ED957",
+    marginTop: 10,
+    marginBottom: 10,
+    borderRadius: 10,
+  },
+  messages: {
+    marginTop: 10,
+  },
+  button: {
+    marginTop: 30,
+  },
 });

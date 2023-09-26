@@ -40,7 +40,6 @@ export const LoginContextProvider: FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     (async () => {
-      await removeUserTokenFromLocalStorage();
       const userToken = await getUserTokenFromLocalStorage();
       if (userToken?.userToken) {
         setUserToken(userToken.userToken);

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Text,
-  StyleSheet,
   View,
   TextInput,
   Button,
@@ -25,6 +24,7 @@ export default function ModalUpdatePasswordUser({
   refetch,
   styles,
 }: ModalUpdatePasswordUserProps) {
+  
   const [modalVisible, setModalVisible] = useState(false);
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);

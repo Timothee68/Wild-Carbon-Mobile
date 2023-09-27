@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { RefreshControl, ScrollView, Text } from "react-native";
+import { RefreshControl, ScrollView, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FriendList from "./components/FriendList";
 import AddFriend from "./components/AddFriend";
@@ -9,6 +9,7 @@ import { GET_ALL_FRIENDS } from "../../src/gql/UserGql";
 import Loader from "../../src/components/Loader";
 
 const Friends: React.FC = () => {
+
   const {
     data: friendsList,
     error,
@@ -44,7 +45,7 @@ const Friends: React.FC = () => {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -59,5 +60,13 @@ const Friends: React.FC = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		justifyContent: "center",
+		backgroundColor: "#D7CBB5",
+	},
+});
 
 export default Friends;

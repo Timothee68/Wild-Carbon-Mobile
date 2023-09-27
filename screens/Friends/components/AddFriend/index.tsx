@@ -8,71 +8,74 @@ import { StyleSheet, Text, View } from "react-native";
 import AddFriendItem from "../AddFriendItem";
 
 interface AddFriendProps {
-  friendsList: User[];
-  refetchFriendsList: () => {};
+	friendsList: User[];
+	refetchFriendsList: () => {};
 }
 
 const AddFriend: React.FC<AddFriendProps> = ({
-  friendsList,
-  refetchFriendsList,
+	friendsList,
+	refetchFriendsList,
 }) => {
-  const { data, loading, error } = useQuery<UserProfiles>(GET_ALL_USERS);
-  const [search, setSearch] = useState("");
-  const [results, setResults] = useState<User[]>([]);
+	const { data, loading, error } = useQuery<UserProfiles>(GET_ALL_USERS);
+	const [search, setSearch] = useState("");
+	const [results, setResults] = useState<User[]>([]);
 
-  useEffect(() => {
-    if (data?.getAllUsers) {
-      setResults(
-        data.getAllUsers.filter(
-          (user) =>
-            user.pseudo.toLowerCase().includes(search.toLowerCase()) &&
-            !friendsList.find(
-              (friend) =>
-                friend.pseudo.toLowerCase() === user.pseudo.toLowerCase()
-            )
-        )
-      );
-    }
-  }, [search, data, friendsList]);
+	useEffect(() => {
+		if (data?.getAllUsers) {
+			setResults(
+				data.getAllUsers.filter(
+					(user) =>
+						user.pseudo.toLowerCase().includes(search.toLowerCase()) &&
+						!friendsList.find(
+							(friend) =>
+								friend.pseudo.toLowerCase() === user.pseudo.toLowerCase()
+						)
+				)
+			);
+		}
+	}, [search, data, friendsList]);
 
-  if (loading) {
-    return <Text>Fetching users...</Text>;
-  }
+	if (loading) {
+		return <Text>Fetching users...</Text>;
+	}
 
-  if (error) {
-    console.log("error fetch users", error);
-    return <Text>Error while fetching users...</Text>;
-  }
+	if (error) {
+		console.log("error fetch users", error);
+		return <Text>Error while fetching users...</Text>;
+	}
 
-  return (
-    <Card>
-      <Card.Title>Ajouter un ami</Card.Title>
-      <Card.Divider />
-      <Input
-        placeholder="Email"
-        rightIcon={<Icon name="search" />}
-        onChangeText={(text) => setSearch(text)}
-      />
-      <View style={styles.list}>
-        {results.map((user) => (
-          <AddFriendItem
-            key={user.id}
-            id={user.id}
-            pseudo={user.pseudo}
-            setSearch={setSearch}
-            refetchFriendsList={refetchFriendsList}
-          />
-        ))}
-      </View>
-    </Card>
-  );
+	return (
+		<Card>
+			<Card.Title style={styles.title}>Ajouter un ami</Card.Title>
+			<Card.Divider />
+			<Input
+				placeholder="Email"
+				rightIcon={<Icon name="search" />}
+				onChangeText={(text) => setSearch(text)}
+			/>
+			<View style={styles.list}>
+				{results.map((user) => (
+					<AddFriendItem
+						key={user.id}
+						id={user.id}
+						pseudo={user.pseudo}
+						setSearch={setSearch}
+						refetchFriendsList={refetchFriendsList}
+					/>
+				))}
+			</View>
+		</Card>
+	);
 };
 
 const styles = StyleSheet.create({
-  list: {
-    flex: 1,
-    gap: 10,
-  },
+	list: {
+		flex: 1,
+		gap: 10,
+	},
+	title: {
+		color: "#7ED957",
+	},
 });
 
 export default AddFriend;

@@ -22,3 +22,9 @@ export type UserProfile = {
 export type UserProfiles = {
   getAllUsers: User[];
 };
+
+export type UserArcticle = {
+  getUser: {
+    articles: Article[];
+  }
+}

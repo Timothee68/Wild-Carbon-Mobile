@@ -66,7 +66,7 @@ export default function Profil() {
                 refetch={refetch}
                 styles={styles}
                 user={user}
-              ></UpdateInfosUser>
+              />
             </SafeAreaView>
           </View>
           <View style={styles.card}>
@@ -76,7 +76,7 @@ export default function Profil() {
                 userId={userId}
                 refetch={refetch}
                 styles={styles}
-              ></ModalUpdatePasswordUser>
+              />
             </SafeAreaView>
           </View>
           <Logout />
@@ -89,84 +89,87 @@ export default function Profil() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.5,
-    justifyContent: "center",
+      flex: 0.5,
+      justifyContent: "center",
+      backgroundColor: "#D7CBB5",
   },
   card: {
-    marginTop: 50,
-    backgroundColor: "#D7CBB5",
-    padding: 20,
+      margin: 30,
+      backgroundColor: "#fff",
+      padding: 20,
   },
   text: {
-    paddingTop: 20,
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 15,
-    marginBottom: 10,
+      paddingTop: 20,
+      textAlign: "center",
+      fontWeight: "bold",
+      fontSize: 15,
+      marginBottom: 10,
   },
   textError: {
-    paddingTop: 20,
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 15,
-    marginBottom: 10,
-    color: "red",
+      paddingTop: 20,
+      textAlign: "center",
+      fontWeight: "bold",
+      fontSize: 15,
+      marginBottom: 10,
+      color: "red",
   },
   input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    borderColor: "#7ED957",
-    marginTop: 10,
-    marginBottom: 10,
-    borderRadius: 10,
+      height: 40,
+      margin: 12,
+      borderWidth: 1,
+      padding: 10,
+      borderColor: "#7ED957",
+      marginTop: 10,
+      marginBottom: 10,
+      borderRadius: 10,
   },
   title: {
-    fontSize: 35,
-    color: "#3C8962",
+      fontSize: 35,
+      color: "#3C8962",
+      textAlign: "center",
   },
   button: {
-    marginLeft: 50,
-    marginRight: 50,
-    backgroundColor: "#A98E60",
-    borderRadius: 10,
-    elevation: 2,
+      marginLeft: 50,
+      marginRight: 50,
+      backgroundColor: "#A98E60",
+      borderRadius: 10,
+      elevation: 2,
+      width:200
   },
   centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22,
   },
   modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+          width: 0,
+          height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
   },
   buttonOpen: {
-    backgroundColor: "#A98E60",
+      backgroundColor: "#A98E60",
   },
   buttonClose: {
-    backgroundColor: "#A98E60",
+      backgroundColor: "#A98E60",
   },
   textStyle: {
-    color: "#7ED957",
-    fontWeight: "bold",
-    textAlign: "center",
+      color: "#7ED957",
+      fontWeight: "bold",
+      textAlign: "center",
   },
   modalText: {
-    marginBottom: 15,
-    textAlign: "center",
+      marginBottom: 15,
+      textAlign: "center",
   },
 });

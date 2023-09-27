@@ -1,4 +1,3 @@
-import User from './UserType';
 
 type Article = {
     id: string;
@@ -7,7 +6,6 @@ type Article = {
     url: string;
     createdAt: Date;
     updatedAt: Date;
-    user: User;
   };
 
 export default Article;

@@ -43,7 +43,21 @@ export const GET_USER = gql`
       id
       pseudo
       email
-    }
+    },  
+  }
+`;
+
+export const GET_USER_ARTICLE = gql`
+  query GetUser($userId: String!) {
+    getUser(userId: $userId) {
+      articles {
+        id
+        title
+        description
+        url
+        createdAt
+      }
+    },  
   }
 `;
 

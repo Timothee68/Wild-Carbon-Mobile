@@ -2,17 +2,23 @@ import React, { useState } from "react";
 import { Text, View, Button, Alert, Modal } from "react-native";
 import { DELETE_USER } from "../../../src/gql/UserGql";
 import { useMutation } from "@apollo/client";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../../navigation/MyStack";
+import { useNavigation } from "@react-navigation/native";
+import useLoginContext from "../../../src/hooks/useLoginContext";
 
 interface ModalDeleteUser {
 	userId: string;
 	styles: any;
 }
-
-export default function ModalDeleteUser(
-	{ userId, styles }: ModalDeleteUser,
-	{ navigation }: { navigation: any }
-) {
+type LoginScreenNavigationProp = NativeStackNavigationProp<
+	RootStackParamList,
+	"Login"
+>;
+export default function ModalDeleteUser({ userId, styles }: ModalDeleteUser) {
 	const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
+	const navigation = useNavigation<LoginScreenNavigationProp>();
+	const { setUserToken, setUserId, setIsLoggedIn } = useLoginContext();
 
 	const [deleteUser] = useMutation(DELETE_USER, {
 		variables: { userId },
@@ -31,8 +37,10 @@ export default function ModalDeleteUser(
 				"Vos informations ont été supprimée avec succès."
 			);
 			setModalDeleteVisible(false);
-
-			navigation.navigate("Register");
+			setUserId("");
+			setUserToken("");
+			setIsLoggedIn(false);
+			navigation.navigate("Login");
 		} catch (error) {
 			console.error("Erreur lors de la supression de l'utilisateur :", error);
 			Alert.alert(

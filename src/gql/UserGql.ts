@@ -58,6 +58,7 @@ export const GET_USER_ARTICLE = gql`
         createdAt
       }
     },  
+
   }
 `;
 
@@ -79,15 +80,6 @@ export const LOGIN = gql`
         id
       }
       success
-    }
-  }
-`;
-
-export const GET_ALL_FRIENDS = gql`
-  query GetFriends($userId: String) {
-    getFriends(userId: $userId) {
-      id
-      pseudo
     }
   }
 `;

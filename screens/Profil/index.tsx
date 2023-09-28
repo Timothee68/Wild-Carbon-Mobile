@@ -19,34 +19,34 @@ import Logout from "./components/Logout";
 Logs.enableExpoCliLogging();
 
 export default function Profil() {
-  const [refreshing, setRefreshing] = React.useState(false);
-  const { userId } = useLoginContext();
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    refetch();
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
+	const [refreshing, setRefreshing] = React.useState(false);
+	const { userId } = useLoginContext();
+	const onRefresh = React.useCallback(() => {
+		setRefreshing(true);
+		refetch();
+		setTimeout(() => {
+			setRefreshing(false);
+		}, 2000);
+	}, []);
 
-  const {
-    data: user,
-    loading,
-    error,
-    refetch,
-  } = useQuery<UserProfile>(GET_USER, { variables: { userId: userId } });
+	const {
+		data: user,
+		loading,
+		error,
+		refetch,
+	} = useQuery<UserProfile>(GET_USER, { variables: { userId: userId } });
 
-  if (!user) {
-    return <Text>Il y a eu un probleme...</Text>;
-  }
+	if (!user) {
+		return <Text>Il y a eu un probleme...</Text>;
+	}
 
-  if (error) {
-    return <Text>Erreur : {error.message}</Text>;
-  }
+	if (error) {
+		return <Text>Erreur : {error.message}</Text>;
+	}
 
-  if (loading) {
-    return <Text>Fetching data...</Text>;
-  }
+	if (loading) {
+		return <Text>Fetching data...</Text>;
+	}
 
   return (
     <>

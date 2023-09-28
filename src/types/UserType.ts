@@ -16,6 +16,10 @@ export type UserProfile = {
     id: string;
     pseudo: string;
     email: string;
+    password: string;
+    articles: Article[];
+    users: User[];
+    expenses: Expense[];
   };
 };
 

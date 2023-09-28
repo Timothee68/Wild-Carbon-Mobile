@@ -1,24 +1,26 @@
-import React from "react";
-import { RefreshControl, ScrollView, Text } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
+import { RefreshControl, ScrollView, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FriendList from "./components/FriendList";
 import AddFriend from "./components/AddFriend";
 import { useQuery } from "@apollo/client";
-import { User } from "../../src/types/UserType";
-import { GET_ALL_FRIENDS } from "../../src/gql/UserGql";
+import { UserProfile } from "../../src/types/UserType";
+import { GET_USER } from "../../src/gql/UserGql";
+import Loader from "../../src/components/Loader";
+import useLoginContext from "../../src/hooks/useLoginContext";
 
 const Friends: React.FC = () => {
+  const { userId } = useLoginContext();
   const {
     data: friendsList,
     error,
     loading,
     refetch: refetchFriendsList,
-  } = useQuery<{ getFriends: User[] }>(GET_ALL_FRIENDS, {
-    fetchPolicy: "network-only",
-  });
+  } = useQuery<UserProfile>(GET_USER, { variables: { userId: userId } });
 
-  const [refreshing, setRefreshing] = React.useState(false);
-  const onRefresh = React.useCallback(() => {
+  const [isAnimating, setIsAnimating] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = useCallback(() => {
     setRefreshing(true);
     refetchFriendsList();
     setTimeout(() => {
@@ -26,12 +28,17 @@ const Friends: React.FC = () => {
     }, 1000);
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => setIsAnimating(false), 1000);
+  }, []);
+
   if (error) {
+    console.log("friends error :", error);
     return <Text>Something broke...</Text>;
   }
 
-  if (loading) {
-    return <Text>Fetching data...</Text>;
+  if (loading || isAnimating) {
+    return <Loader />;
   }
 
   if (!friendsList) {
@@ -39,20 +46,28 @@ const Friends: React.FC = () => {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <FriendList friendsList={friendsList.getFriends} />
+        <FriendList friendsList={friendsList.getUser.users} />
         <AddFriend
-          friendsList={friendsList.getFriends}
+          friendsList={friendsList.getUser.users}
           refetchFriendsList={refetchFriendsList}
         />
       </ScrollView>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#D7CBB5",
+  },
+});
 
 export default Friends;

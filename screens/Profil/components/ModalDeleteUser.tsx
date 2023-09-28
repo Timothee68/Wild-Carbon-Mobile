@@ -1,20 +1,36 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Text, View, Button, Alert, Modal } from "react-native";
 import { DELETE_USER } from "../../../src/gql/UserGql";
 import { useMutation } from "@apollo/client";
 
 interface ModalDeleteUser {
-  userId: string;
-  styles: any
+	userId: string;
+	styles: any;
 }
 
-export default function ModalDeleteUser({userId, styles } : ModalDeleteUser, {  navigation}: {navigation: any}  ) {
+export default function ModalDeleteUser(
+	{ userId, styles }: ModalDeleteUser,
+	{ navigation }: { navigation: any }
+) {
+	const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
 
-    const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
+	const [deleteUser] = useMutation(DELETE_USER, {
+		variables: { userId },
+	});
 
-    const [deleteUser] = useMutation(DELETE_USER, {
-        variables: { userId }, 
-      });
+	const handleDeleteUser = async () => {
+		try {
+			await deleteUser({
+				variables: {
+					userId: userId,
+				},
+			});
+			console.log(userId);
+			Alert.alert(
+				"Suppression réussie",
+				"Vos informations ont été supprimée avec succès."
+			);
+			setModalDeleteVisible(false);
 
     const handleDeleteUser = async () => {
       try {

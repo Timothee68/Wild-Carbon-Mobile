@@ -27,7 +27,7 @@ const Friends: React.FC = () => {
       setRefreshing(false);
     }, 1000);
   }, []);
-
+  console.log("friends list", friendsList);
   useEffect(() => {
     setTimeout(() => setIsAnimating(false), 1000);
   }, []);

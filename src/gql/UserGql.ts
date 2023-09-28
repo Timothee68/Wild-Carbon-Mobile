@@ -43,6 +43,10 @@ export const GET_USER = gql`
       id
       pseudo
       email
+      users {
+        id
+        pseudo
+      }
     }
   }
 `;
@@ -65,15 +69,6 @@ export const LOGIN = gql`
         id
       }
       success
-    }
-  }
-`;
-
-export const GET_ALL_FRIENDS = gql`
-  query GetFriends($userId: String) {
-    getFriends(userId: $userId) {
-      id
-      pseudo
     }
   }
 `;

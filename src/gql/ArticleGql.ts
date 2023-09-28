@@ -44,11 +44,6 @@ export const UPDATE_ARTICLE = gql`
       url
       createdAt
       updatedAt
-      user {
-        id
-        pseudo
-        email
-      }
     }
   }
 `;

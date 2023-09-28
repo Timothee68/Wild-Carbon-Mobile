@@ -16,14 +16,12 @@ import ArticleType from "../../../src/types/ArticleType";
 interface ModalArticleUpdate {
   userId: string;
   refetch: () => void;
-  articleId: string
   article: ArticleType
 }
 
 export default function ModalArticleUpdate({
   userId,
   refetch,
-  articleId,
   article
 }: ModalArticleUpdate) {
 
@@ -32,9 +30,7 @@ export default function ModalArticleUpdate({
     const [description, setDescription] = useState(article.description);
     const [url, setUrl] = useState(article.url);
 
-    const [updateArticle, { error }]  = useMutation(UPDATE_ARTICLE, {
-        variables: {articleId}
-    })
+    const [updateArticle, { error }]  = useMutation(UPDATE_ARTICLE);
 
     if (error) {
       console.log('Article error: ', error);

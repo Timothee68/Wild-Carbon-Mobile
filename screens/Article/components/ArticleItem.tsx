@@ -48,7 +48,7 @@ export const ArticleItem = ({article ,userId , refetch} : ArticleItem) => {
                 
                 <TouchableOpacity
                 >
-                    <ModalArticleUpdate articleId={id} article={article} userId={userId} refetch={refetch} />   
+                    <ModalArticleUpdate article={article} userId={userId} refetch={refetch} />   
                 </TouchableOpacity>
                 <TouchableOpacity>
                 <Text  style={styles.icon}>

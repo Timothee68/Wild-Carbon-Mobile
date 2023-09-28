@@ -5,6 +5,7 @@ import { removeUserTokenFromLocalStorage } from "../../../src/hooks/useLoginCont
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../navigation/MyStack";
+import client from "../../../utils/apollo";
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
 	RootStackParamList,
@@ -19,6 +20,7 @@ const Logout: React.FC = () => {
 		setUserToken("");
 		setIsLoggedIn(false);
 		await removeUserTokenFromLocalStorage();
+		await client.resetStore();
 		navigation.navigate("Login");
 	};
 

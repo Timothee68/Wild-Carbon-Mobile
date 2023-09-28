@@ -1,31 +1,26 @@
 import { gql } from '@apollo/client';
 
 export const CREATE_ARTICLE = gql`
-  mutation CreateArticle(
-    $title: String!
-    $description: String!
-    $url: String!
-    $userId: String!
+mutation CreateArticle(
+  $title: String!
+  $description: String!
+  $url: String!
+  $userId: String!
+) {
+  createArticle(
+    title: $title
+    description: $description
+    url: $url
+    userId: $userId
   ) {
-    createArticle(
-      title: $title
-      description: $description
-      url: $url
-      userId: $userId
-    ) {
-      id
-      title
-      description
-      url
-      createdAt
-      updatedAt
-      user {
-        id
-        pseudo
-        email
-      }
-    }
+    id
+    title
+    description
+    url
+    createdAt
+    updatedAt
   }
+}
 `;
 
 export const UPDATE_ARTICLE = gql`
@@ -49,11 +44,6 @@ export const UPDATE_ARTICLE = gql`
       url
       createdAt
       updatedAt
-      user {
-        id
-        pseudo
-        email
-      }
     }
   }
 `;

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Text,
-  StyleSheet,
   View,
   TextInput,
   Button,
@@ -25,6 +24,7 @@ export default function ModalUpdatePasswordUser({
   refetch,
   styles,
 }: ModalUpdatePasswordUserProps) {
+  
   const [modalVisible, setModalVisible] = useState(false);
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -132,14 +132,14 @@ export default function ModalUpdatePasswordUser({
                 title="Enregistrer"
                 color="#7ED957"
                 onPress={handleUpdatePasswordUser}
-              ></Button>
+              />
             </View>
             <View style={{ ...styles.button, marginTop: 30 }}>
               <Button
-                title="Close Update mot de passe"
+                title="X"
                 color="#7ED957"
                 onPress={() => setModalVisible(!modalVisible)}
-              ></Button>
+              />
             </View>
           </View>
         </View>
@@ -149,7 +149,7 @@ export default function ModalUpdatePasswordUser({
           title="Modifier mot de passe"
           color="#7ED957"
           onPress={() => setModalVisible(true)}
-        ></Button>
+        />
       </View>
     </View>
   );

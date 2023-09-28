@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, Alert } from "react-native";
+import { View, TextInput, Alert } from "react-native";
 import {UPDATE_USER} from "../../../src/gql/UserGql";
 import { useMutation } from "@apollo/client";
 import { UserProfile } from "../../../src/types/UserType";
-
+import { Button } from "@rneui/base";
 interface UpdateInfosUser {
     userId: string;
     refetch: () => void;
@@ -52,8 +52,13 @@ export default function UpdateInfosUser({ userId, refetch, styles, user }: Updat
             value={email}
             onChangeText={(text) => setEmail(text)}
         />
-        <View style={styles.button}>
-            <Button title="Enregistrer" color="#7ED957" onPress={handleUpdateUser}></Button>
+        <View>
+            <Button 
+              title="Enregistrer" 
+              color="#7ED957"
+              onPress={handleUpdateUser}
+              containerStyle={styles.button}
+            />
         </View>
     </>
     )

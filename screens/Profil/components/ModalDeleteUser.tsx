@@ -20,10 +20,7 @@ export default function ModalDeleteUser({ userId, styles }: ModalDeleteUser) {
 	const navigation = useNavigation<LoginScreenNavigationProp>();
 	const { setUserToken, setUserId, setIsLoggedIn } = useLoginContext();
 
-	const [deleteUser] = useMutation(DELETE_USER, {
-		variables: { userId },
-	});
-
+	const [deleteUser] = useMutation(DELETE_USER);
 	const handleDeleteUser = async () => {
 		try {
 			await deleteUser({
@@ -50,43 +47,37 @@ export default function ModalDeleteUser({ userId, styles }: ModalDeleteUser) {
 		}
 	};
 
-	return (
-		<View style={styles.centeredView}>
-			<Modal
-				animationType="slide"
-				transparent={true}
-				visible={modalDeleteVisible}
-				onRequestClose={() => {
-					Alert.alert("Modal has been closed.");
-					setModalDeleteVisible(!modalDeleteVisible);
-				}}
-			>
-				<View style={styles.centeredView}>
-					<View style={styles.modalView}>
-						<Text style={styles.text}>Etes Vous sûr ?</Text>
-						<Text>La suppression est définitive.</Text>
-						<View style={{ marginTop: 30 }}>
-							<Button
-								title="Supprimer mon compte"
-								color="red"
-								onPress={handleDeleteUser}
-							/>
-						</View>
-						<View style={{ ...styles.button, marginTop: 30 }}>
-							<Button
-								title="Close"
-								color="#7ED957"
-								onPress={() => setModalDeleteVisible(!modalDeleteVisible)}
-							/>
-						</View>
-					</View>
-				</View>
-			</Modal>
-			<Button
-				title="Supprimer mon compte"
-				color="red"
-				onPress={() => setModalDeleteVisible(true)}
-			/>
-		</View>
-	);
+
+      } catch (error) {
+          console.error('Erreur lors de la supression de l\'utilisateur :', error);
+          Alert.alert("Erreur", "Une erreur est survenue. Veuillez réessayer plus tard.");
+      }
+    }
+
+    return (
+        <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalDeleteVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          setModalDeleteVisible(!modalDeleteVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.text}>Etes Vous sûr ?</Text>
+              <Text>La suppression est définitive.</Text>
+              <View style={{ marginTop: 30 }}>
+                <Button title="Supprimer mon compte" color="red" onPress={handleDeleteUser}/>
+              </View>
+              <View style={{ ...styles.button, marginTop: 30 }}>
+                <Button  title="Close" color="#7ED957" onPress={() => setModalDeleteVisible(!modalDeleteVisible)}/>
+              </View>
+            </View>
+          </View>
+        </Modal>
+        <Button title="Supprimer mon compte" color="red" onPress={() => setModalDeleteVisible(true)}/>
+      </View>
+    );
 }

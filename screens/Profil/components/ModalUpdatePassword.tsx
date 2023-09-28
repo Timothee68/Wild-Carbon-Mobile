@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import {
   Text,
-  StyleSheet,
   View,
   TextInput,
-  Button,
   Alert,
   Modal,
   TouchableOpacity,
 } from "react-native";
 import { UPDATE_USER } from "../../../src/gql/UserGql";
 import { useMutation } from "@apollo/client";
-
+import { Button } from "@rneui/base";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 interface ModalUpdatePasswordUserProps {
@@ -25,6 +23,7 @@ export default function ModalUpdatePasswordUser({
   refetch,
   styles,
 }: ModalUpdatePasswordUserProps) {
+  
   const [modalVisible, setModalVisible] = useState(false);
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -127,29 +126,32 @@ export default function ModalUpdatePasswordUser({
             {passwordError ? (
               <Text style={styles.textError}>{passwordError}</Text>
             ) : null}
-            <View style={styles.button}>
+            <View>
               <Button
                 title="Enregistrer"
                 color="#7ED957"
                 onPress={handleUpdatePasswordUser}
-              ></Button>
+                containerStyle={styles.button}
+              />
             </View>
-            <View style={{ ...styles.button, marginTop: 30 }}>
+            <View style={{ marginTop: 30 }}>
               <Button
-                title="Close Update mot de passe"
+                title="X"
                 color="#7ED957"
                 onPress={() => setModalVisible(!modalVisible)}
-              ></Button>
+                containerStyle={styles.button}
+              />
             </View>
           </View>
         </View>
       </Modal>
-      <View style={styles.button}>
+      <View>
         <Button
           title="Modifier mot de passe"
           color="#7ED957"
           onPress={() => setModalVisible(true)}
-        ></Button>
+          containerStyle={styles.button}
+        />
       </View>
     </View>
   );

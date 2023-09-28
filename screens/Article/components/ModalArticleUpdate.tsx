@@ -3,7 +3,6 @@ import {
   Text,
   View,
   TextInput,
-  Button,
   Alert,
   Modal,
   StyleSheet,
@@ -12,6 +11,7 @@ import { useMutation } from "@apollo/client";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { UPDATE_ARTICLE } from "../../../src/gql/ArticleGql";
 import ArticleType from "../../../src/types/ArticleType";
+import { Button } from "@rneui/base";
 
 interface ModalArticleUpdate {
   userId: string;
@@ -108,11 +108,12 @@ export default function ModalArticleUpdate({
                 onPress={handleUpdateArticle}
               />
             </View>
-            <View style={{ ...styles.button, marginTop: 30 }}>
+            <View style={{ marginTop: 30 }}>
               <Button
                 title="X"
                 color="#7ED957"
                 onPress={() => setModalVisible(!modalVisible)}
+                containerStyle={styles.button}
               />
             </View>
           </View>
@@ -120,7 +121,7 @@ export default function ModalArticleUpdate({
       </Modal>
       <View>
         <Text>
-            <Ionicons size={30} color="blue" name="pencil-outline"  onPress={() => setModalVisible(true)}/>
+            <Ionicons size={30} color="blue" name="pencil-sharp"  onPress={() => setModalVisible(true)}/>
         </Text>
       </View>
     </View>

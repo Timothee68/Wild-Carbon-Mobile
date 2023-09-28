@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { ScrollView, Text, View, StyleSheet, TextInput, Button, Alert, Modal } from "react-native";
+import { Text, View, TextInput, Alert, Modal } from "react-native";
 import { useMutation } from "@apollo/client";
 import { CREATE_ARTICLE } from "../../../src/gql/ArticleGql";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { Button } from "@rneui/base";
 
 interface AddArticle {
     userId: string;
@@ -89,11 +89,12 @@ export default function AddArticle({userId, refetch, styles } : AddArticle) {
                     </View>
                 </View>
             </Modal>
-                <View style={styles.button}>
+                <View>
                     <Button
                     title="Ajouter"
                     color="#7ED957"
                     onPress={() => setModalVisible(true)}
+                    containerStyle={styles.button}
                 />
             </View>
         </View>

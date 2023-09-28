@@ -52,7 +52,7 @@ export const ArticleItem = ({article ,userId , refetch} : ArticleItem) => {
                 </TouchableOpacity>
                 <TouchableOpacity>
                 <Text  style={styles.icon}>
-                    <Ionicons size={30} name="trash-bin-outline" color="red" onPress={handleDeleteArticle}/>
+                    <Ionicons size={30} name="trash-bin" color="red" onPress={handleDeleteArticle}/>
                 </Text>
                 </TouchableOpacity>
             </View>

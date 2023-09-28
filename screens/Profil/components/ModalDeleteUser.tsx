@@ -6,6 +6,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../navigation/MyStack";
 import { useNavigation } from "@react-navigation/native";
 import useLoginContext from "../../../src/hooks/useLoginContext";
+import client from "../../../utils/apollo";
 
 interface ModalDeleteUser {
 	userId: string;
@@ -37,6 +38,7 @@ export default function ModalDeleteUser({ userId, styles }: ModalDeleteUser) {
 			setUserId("");
 			setUserToken("");
 			setIsLoggedIn(false);
+			await client.resetStore();
 			navigation.navigate("Login");
 		} catch (error) {
 			console.error("Erreur lors de la supression de l'utilisateur :", error);

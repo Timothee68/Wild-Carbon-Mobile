@@ -42,31 +42,26 @@ export default function ModalArticleUpdate({
 
     const handleUpdateArticle = async () => {
         try {   
-  
-            console.log("hello")
-        await updateArticle({
-            variables: {
-                userId: userId,
-                title: title,
-                description: description,
-                url: url,
-                articleId: article.id
-            }
-        });
-                    console.log("coucou")
+            await updateArticle({
+                variables: {
+                    userId: userId,
+                    title: title,
+                    description: description,
+                    url: url,
+                    articleId: article.id
+                }
+            });
             setModalVisible(false);
             refetch();
             Alert.alert( "Mise à jour réussie",
                 "Vos informations ont été mises à jour avec succès."
             ); 
- 
-       
         } catch (error) {
-        console.error("Erreur lors de la mise à jour de l'article :", error);
-        Alert.alert(
-            "Erreur",
-            "Une erreur est survenue. Veuillez réessayer plus tard."
-        );
+            console.error("Erreur lors de la mise à jour de l'article :", error);
+            Alert.alert(
+                "Erreur",
+                "Une erreur est survenue. Veuillez réessayer plus tard."
+            );
         }
     };
 

@@ -3,7 +3,10 @@ import ArticleType from "../../../src/types/ArticleType";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState } from "react";
 import ModalArticleUpdate from "./ModalArticleUpdate";
-
+import { Logs } from "expo";
+import { useMutation } from "@apollo/client";
+import { DELETE_ARTICLE } from "../../../src/gql/ArticleGql";
+Logs.enableExpoCliLogging();
 interface ArticleItem {
     userId: string;
     refetch: () => void;
@@ -12,8 +15,29 @@ interface ArticleItem {
 
 export const ArticleItem = ({article ,userId , refetch} : ArticleItem) => {
  
-    const { id, title, description, url, createdAt } = article;
-    const [modalVisible, setModalVisible] = useState(false);
+    const { id, title, description, url } = article;
+
+    const [deleteArcicle] = useMutation(DELETE_ARTICLE, {
+        variables: {id},
+    })
+
+    const handleDeleteArticle = async () => {
+        try {
+            await deleteArcicle({
+                variables: {
+                    id: id
+                }
+            });
+            refetch()
+            Alert.alert( "Suppression réussie",
+            "Votre article a été supprimé avec succès.");
+
+        } catch (error) {
+            console.error('Erreur lors de la supression de l\'article :', error);
+            Alert.alert("Erreur", "Une erreur est survenue. Veuillez réessayer plus tard.");
+        }
+    }
+
   return (
     <View style={styles.card}>
         <Text style={styles.title}>{title}</Text>
@@ -23,14 +47,12 @@ export const ArticleItem = ({article ,userId , refetch} : ArticleItem) => {
             <View style={styles.containerButton}>
                 
                 <TouchableOpacity
-                    onPress={() => setModalVisible(true)}
                 >
-                    <ModalArticleUpdate article={article} userId={userId} refetch={refetch} />   
+                    <ModalArticleUpdate articleId={id} article={article} userId={userId} refetch={refetch} />   
                 </TouchableOpacity>
-
                 <TouchableOpacity>
-                <Text>
-                    <Ionicons size={30} name="trash-bin-outline" color="red"/>
+                <Text  style={styles.icon}>
+                    <Ionicons size={30} name="trash-bin-outline" color="red" onPress={handleDeleteArticle}/>
                 </Text>
                 </TouchableOpacity>
             </View>
@@ -69,5 +91,8 @@ const styles = StyleSheet.create({
         justifyContent:"space-around",
         marginTop:20
     },
+    icon: {
+        marginTop:20
+    }
 
 });

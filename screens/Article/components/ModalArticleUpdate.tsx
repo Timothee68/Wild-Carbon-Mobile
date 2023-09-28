@@ -16,41 +16,51 @@ import ArticleType from "../../../src/types/ArticleType";
 interface ModalArticleUpdate {
   userId: string;
   refetch: () => void;
-  
+  articleId: string
   article: ArticleType
 }
 
 export default function ModalArticleUpdate({
   userId,
   refetch,
+  articleId,
   article
 }: ModalArticleUpdate) {
 
-    const { id } = article;
     const [modalVisible, setModalVisible] = useState(false);
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [url, setUrl] = useState("");
+    const [title, setTitle] = useState(article.title);
+    const [description, setDescription] = useState(article.description);
+    const [url, setUrl] = useState(article.url);
 
-    const [UpdateArticle]  = useMutation(UPDATE_ARTICLE, {
-        variables: {id}
+    const [updateArticle, { error }]  = useMutation(UPDATE_ARTICLE, {
+        variables: {articleId}
     })
 
+    if (error) {
+      console.log('Article error: ', error);
+    }
+
     const handleUpdateArticle = async () => {
-        try {         
-        await UpdateArticle({
+        try {   
+  
+            console.log("hello")
+        await updateArticle({
             variables: {
-            userId: userId,
-            title: title,
-            description: description,
-            url: url,
-            },
+                userId: userId,
+                title: title,
+                description: description,
+                url: url,
+                articleId: article.id
+            }
         });
-        refetch();
-        Alert.alert(
-            "Mise à jour réussie",
-            "Vos informations ont été mises à jour avec succès."
-        );
+                    console.log("coucou")
+            setModalVisible(false);
+            refetch();
+            Alert.alert( "Mise à jour réussie",
+                "Vos informations ont été mises à jour avec succès."
+            ); 
+ 
+       
         } catch (error) {
         console.error("Erreur lors de la mise à jour de l'article :", error);
         Alert.alert(
@@ -100,7 +110,6 @@ export default function ModalArticleUpdate({
                 onChangeText={(text) => setUrl(text)}
               />
             </View>
-
             <View style={styles.button}>
               <Button
                 title="Enregistrer"

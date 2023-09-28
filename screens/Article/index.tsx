@@ -15,6 +15,11 @@ export default function Article() {
     const [refreshing, setRefreshing] = React.useState(false);
     const { userId , userToken} = useLoginContext();
     // console.log(userToken);
+
+    const { data, loading, error, refetch} =
+       useQuery<UserArcticle>(GET_USER_ARTICLE, { variables: { userId: userId } 
+    });
+    
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         refetch();
@@ -22,10 +27,6 @@ export default function Article() {
           setRefreshing(false);
         }, 2000);
       }, []);
-
-    const { data, loading, error, refetch} =
-       useQuery<UserArcticle>(GET_USER_ARTICLE, { variables: { userId: userId } 
-    });
 
     if (error) {
     return <Text>Erreur : {error.message}</Text>;

@@ -14,23 +14,7 @@ export default function ModalDeleteUser(
 ) {
 	const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
 
-	const [deleteUser] = useMutation(DELETE_USER, {
-		variables: { userId },
-	});
-
-	const handleDeleteUser = async () => {
-		try {
-			await deleteUser({
-				variables: {
-					userId: userId,
-				},
-			});
-			console.log(userId);
-			Alert.alert(
-				"Suppression réussie",
-				"Vos informations ont été supprimée avec succès."
-			);
-			setModalDeleteVisible(false);
+	const [deleteUser] = useMutation(DELETE_USER);
 
     const handleDeleteUser = async () => {
       try {

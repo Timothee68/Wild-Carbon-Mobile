@@ -54,6 +54,7 @@ export const GET_USER = gql`
 export const GET_USER_ARTICLE = gql`
   query GetUser($userId: String!) {
     getUser(userId: $userId) {
+      id
       articles {
         id
         title

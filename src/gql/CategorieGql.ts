@@ -41,3 +41,17 @@ export const GET_ALL_CATEGORIES = gql`
     }
   }
 `;
+
+export const GET_CATEGORY_AND_ITEM = gql`
+  query GetCategory($categoryId: String!) {
+    getCategory(categoryId: $categoryId) {
+      items {
+        id
+        label
+        emissionFactor
+        unit
+      }
+    }
+  }
+`;
+

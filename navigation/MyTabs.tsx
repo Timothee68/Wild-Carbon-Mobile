@@ -5,6 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Article from "../screens/Article/index";
 import Home from "../screens/Home/index";
 import Friends from "../screens/Friends";
+import Expense from "../screens/Expense";
 
 const Tab = createBottomTabNavigator();
 export default function MyTabs({ navigation }: { navigation: any }) {
@@ -23,6 +24,8 @@ export default function MyTabs({ navigation }: { navigation: any }) {
             iconName = focused ? "newspaper" : "newspaper-outline";
           } else if (route.name === "Friends") {
             iconName = focused ? "people" : "people-outline";
+          } else if (route.name === "+ Dépense") {
+            iconName = focused ? "leaf" : "leaf-outline";
           }
           return <Ionicons name={iconName as any} size={size} color={color} />;
         },
@@ -59,6 +62,7 @@ export default function MyTabs({ navigation }: { navigation: any }) {
       />
       <Tab.Screen name="Article" component={Article} />
       <Tab.Screen name="Friends" component={Friends} />
+      <Tab.Screen name="+ Dépense" component={Expense} />
     </Tab.Navigator>
   );
 }

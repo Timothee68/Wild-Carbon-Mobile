@@ -6,4 +6,8 @@ type Category = {
     items: Item[]; 
   };
 
+  export interface CategoryItemType {
+    items: Item[]
+}
+
 export default Category;

@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const CREATE_EXPENSE = gql`
-  mutation CreateExpense($itemId: String!, $title: String!, $quantity: Float!) {
-    createExpense(itemId: $itemId, title: $title, quantity: $quantity)
+  mutation CreateExpense($itemId: String!, $title: String!, $quantity: Float!, $date: String!) {
+    createExpense(itemId: $itemId, title: $title, quantity: $quantity, date: $date) 
   }
 `;
 
